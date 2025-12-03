@@ -1,0 +1,387 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>כלי בדיקת תוכן - PassportCard</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons - Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-container">
+      <div class="header-right">
+        <div class="logo">
+          <img src="https://www.passportcard.co.il/wp-content/uploads/2023/07/logo.svg" alt="PassportCard" class="logo-icon logo-large" id="logo-large">
+        </div>
+        <span class="header-title" id="header-title">כלי בדיקת תוכן</span>
+        <span class="header-step-indicator" id="header-step">סקשן 1 מתוך 11</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary btn-mobile-menu" id="btn-mobile-menu" title="תפריט">
+          <i class="ti ti-menu-2"></i>
+        </button>
+        <button class="btn btn-secondary" id="btn-theme" title="החלף מצב תצוגה">
+          <i class="ti ti-moon"></i>
+        </button>
+        <button class="btn btn-secondary" id="btn-reset" title="התחלה מחדש" style="display: none;">
+          <i class="ti ti-refresh"></i>
+          התחלה מחדש
+        </button>
+        <button class="btn btn-secondary" id="btn-upload" style="display: none;">
+          <i class="ti ti-upload"></i>
+          טען קובץ
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar-container" id="progress-bar-container">
+    <div class="progress-bar-inner">
+      <div class="progress-bar">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+      </div>
+      <div class="progress-bar-text">
+        <span id="progress-text">0 מתוך 0 אושרו</span>
+        <span class="progress-bar-percentage" id="progress-percentage">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Welcome Screen -->
+  <section class="welcome-screen" id="welcome-screen">
+    <!-- Hero Section - Solid Red Gradient with Floating Images + Card -->
+    <div class="welcome-hero">
+      <div class="welcome-hero-container">
+        <!-- Large Floating Images -->
+        <div class="welcome-hero-visuals">
+          <div class="hero-image-box hero-image-box-1">
+            <img src="https://www.passportcard.co.il/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2023/11/passportcard-41-scaled.jpg.webp" alt="מטייל">
+          </div>
+          <div class="hero-image-box hero-image-box-2">
+            <img src="https://www.passportcard.co.il/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2023/07/21093_pic_459x333px.jpg.webp" alt="נוף">
+          </div>
+          <div class="hero-image-box hero-image-box-3">
+            <img src="https://www.passportcard.co.il/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2023/07/21093_pic_482x350px.jpg.webp" alt="טיול">
+          </div>
+        </div>
+        
+        <!-- Text Content -->
+        <div class="welcome-hero-content">
+          <h1 class="welcome-hero-title">כלי בדיקת תוכן מילולי</h1>
+          <p class="welcome-hero-subtitle">בדקו, אשרו ועירכו טקסטים לפני העלאה לייצור. הכלי שומר את ההתקדמות שלכם ומאפשר הורדה של קובץ מעודכן.</p>
+          <div class="welcome-hero-features">
+            <div class="welcome-hero-feature">
+              <i class="ti ti-shield-check"></i>
+              <span>שמירה אוטומטית</span>
+            </div>
+            <div class="welcome-hero-feature">
+              <i class="ti ti-clock"></i>
+              <span>מעקב בזמן אמת</span>
+            </div>
+            <div class="welcome-hero-feature">
+              <i class="ti ti-download"></i>
+              <span>הורדת קובץ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="welcome-main">
+      <!-- Floating PassportCard near upload -->
+      <div class="welcome-floating-card">
+        <img src="https://www.passportcard.co.il/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2025/05/pcil-pc-group-378-238.png.webp" alt="PassportCard">
+      </div>
+      
+      <h2 class="welcome-title">התחלת עבודה</h2>
+      <p class="welcome-subtitle">העלו קובץ JSON ובדקו את הטקסטים</p>
+      
+      <div class="welcome-upload-container">
+        <div class="welcome-upload-area" id="upload-area">
+          <i class="ti ti-file-upload"></i>
+          <h3>גררו לכאן קובץ JSON</h3>
+          <p>או לחצו לבחירה</p>
+          <input type="file" class="upload-input" id="file-input" accept=".json">
+        </div>
+        
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: var(--space-3); text-align: center;">
+          הכלי תומך בקבצי JSON בפורמט טקסטים מקוננים
+        </p>
+        
+        <div class="saved-progress-banner" id="saved-progress-banner" style="display: none;">
+          <i class="ti ti-info-circle"></i>
+          <div class="text">
+            <div class="title" id="saved-progress-title">נמצאה התקדמות שמורה</div>
+            <div class="details" id="saved-progress-details">העלו את אותו קובץ כדי להמשיך</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wizard Container -->
+  <div class="wizard-container" id="wizard-container">
+    <!-- Mini-Map Sidebar -->
+    <aside class="minimap" id="minimap">
+      <div class="minimap-title">סקשנים</div>
+      <ul class="minimap-list" id="minimap-list">
+        <!-- Generated by JS -->
+      </ul>
+      <div class="minimap-stats">
+        <div class="minimap-stats-row">
+          <span>אושרו:</span>
+          <span class="minimap-stats-value" id="minimap-approved">0</span>
+        </div>
+        <div class="minimap-stats-row">
+          <span>נערכו:</span>
+          <span class="minimap-stats-value" id="minimap-edited">0</span>
+        </div>
+        <div class="minimap-stats-row">
+          <span>סה״כ:</span>
+          <span class="minimap-stats-value" id="minimap-total">0</span>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Wizard Content -->
+    <main class="wizard-content" id="wizard-content">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title" id="section-title">common</h2>
+          <p class="section-subtitle" id="section-subtitle">0 שדות</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-secondary" id="btn-approve-all">
+            <i class="ti ti-checks"></i>
+            אשרו הכל
+          </button>
+        </div>
+      </div>
+      
+      <div class="fields-container" id="fields-container">
+        <!-- Generated by JS -->
+      </div>
+      
+      <div class="section-navigation" id="section-navigation">
+        <button class="btn btn-secondary" id="btn-prev-section">
+          <i class="ti ti-arrow-right"></i>
+          הקודם
+        </button>
+        <button class="btn btn-primary" id="btn-next-section">
+          הבא
+          <i class="ti ti-arrow-left"></i>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Summary Screen -->
+  <section class="summary-screen" id="summary-screen">
+    <div class="summary-container">
+      <div class="summary-celebration">
+        <img src="https://www.passportcard.co.il/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2025/05/pcil-pc-group-378-238.png.webp" alt="PassportCard" class="summary-card-image" id="summary-card-image">
+      </div>
+      
+      <h1 class="summary-title">סיימתם!</h1>
+      <p class="summary-subtitle">כל השדות נבדקו ואושרו בהצלחה</p>
+      
+      <div class="summary-stats">
+        <div class="summary-stat approved">
+          <div class="summary-stat-value" id="summary-approved">0</div>
+          <div class="summary-stat-label">שדות אושרו</div>
+        </div>
+        <div class="summary-stat edited">
+          <div class="summary-stat-value" id="summary-edited">0</div>
+          <div class="summary-stat-label">שדות נערכו</div>
+        </div>
+      </div>
+      
+      <div class="summary-changes" id="summary-changes" style="display: none;">
+        <h3 class="summary-changes-title">שינויים שבוצעו</h3>
+        <div id="summary-changes-list">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+      
+      <div class="summary-actions">
+        <button class="btn btn-secondary" id="btn-summary-reset">
+          <i class="ti ti-refresh"></i>
+          התחלה מחדש
+        </button>
+        <button class="btn btn-primary" id="btn-download">
+          <i class="ti ti-download"></i>
+          הורידו את הקובץ
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="footer-container">
+      <img src="https://www.passportcard.co.il/wp-content/uploads/2023/07/logo-m.svg" alt="PassportCard" class="footer-logo">
+      <p class="footer-title">כלי בדיקת תוכן</p>
+      <p class="footer-description">כלי פנימי לצוות הביזנס של PassportCard<br>לבדיקה ואישור טקסטים לפני העלאה לייצור</p>
+      <div class="footer-divider"></div>
+      <!-- change it to have the year of the current year -->
+      <p class="footer-copyright">© <span id="current-year"></span> PassportCard</p> 
+      <script>
+        document.getElementById('current-year').innerHTML = new Date().getFullYear();
+      </script>
+    </div>
+  </footer>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+  <!-- Modals -->
+  <!-- Resume Modal -->
+  <div class="modal-overlay" id="modal-resume">
+    <div class="modal">
+      <div class="modal-icon success">
+        <i class="ti ti-check"></i>
+      </div>
+      <h2 class="modal-title">נמצאה התקדמות שמורה</h2>
+      <div class="modal-details">
+        <div class="modal-detail-row">
+          <span class="modal-detail-label">קובץ:</span>
+          <span class="modal-detail-value" id="modal-resume-filename">he.json</span>
+        </div>
+        <div class="modal-detail-row">
+          <span class="modal-detail-label">התקדמות:</span>
+          <span class="modal-detail-value" id="modal-resume-progress">45%</span>
+        </div>
+        <div class="modal-detail-row">
+          <span class="modal-detail-label">עודכן לאחרונה:</span>
+          <span class="modal-detail-value" id="modal-resume-date">--</span>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btn-resume-restart">התחילו מחדש</button>
+        <button class="btn btn-primary" id="btn-resume-continue">המשיכו מאיפה שעצרתם</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Different File Modal -->
+  <div class="modal-overlay" id="modal-different-file">
+    <div class="modal">
+      <div class="modal-icon warning">
+        <i class="ti ti-alert-triangle"></i>
+      </div>
+      <h2 class="modal-title">זה קובץ שונה מהקובץ הקודם</h2>
+      <div class="modal-content">
+        ההתקדמות הקודמת תימחק אם תמשיכו.
+      </div>
+      <div class="modal-details">
+        <div class="modal-detail-row">
+          <span class="modal-detail-label">קובץ חדש:</span>
+          <span class="modal-detail-value" id="modal-diff-new">--</span>
+        </div>
+        <div class="modal-detail-row">
+          <span class="modal-detail-label">קובץ קודם:</span>
+          <span class="modal-detail-value" id="modal-diff-old">--</span>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btn-diff-cancel">ביטול</button>
+        <button class="btn btn-primary" id="btn-diff-continue">המשיכו עם הקובץ החדש</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Confirmation Modal -->
+  <div class="modal-overlay" id="modal-reset">
+    <div class="modal">
+      <div class="modal-icon warning">
+        <i class="ti ti-alert-triangle"></i>
+      </div>
+      <h2 class="modal-title">האם להתחיל מחדש?</h2>
+      <div class="modal-content">
+        כל ההתקדמות תימחק ותתחילו מההתחלה<br>עם הנתונים העדכניים מהמערכת
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btn-reset-cancel">ביטול</button>
+        <button class="btn btn-primary" id="btn-reset-confirm">כן, התחילו מחדש</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tutorial Modal -->
+  <div class="modal-overlay" id="modal-tutorial">
+    <div class="modal">
+      <div class="modal-icon info">
+        <i class="ti ti-info-circle"></i>
+      </div>
+      <h2 class="modal-title">איך זה עובד?</h2>
+      
+      <div class="tutorial-list">
+        <div class="tutorial-item">
+          <i class="ti ti-check"></i>
+          <div class="tutorial-item-text">
+            <div class="tutorial-item-title">אישור</div>
+            <div class="tutorial-item-desc">לחצו על "אישור" לאשר שהטקסט תקין</div>
+          </div>
+        </div>
+        <div class="tutorial-item">
+          <i class="ti ti-edit"></i>
+          <div class="tutorial-item-text">
+            <div class="tutorial-item-title">עריכה</div>
+            <div class="tutorial-item-desc">לחצו על "עריכה" לשנות את הטקסט</div>
+          </div>
+        </div>
+        <div class="tutorial-item">
+          <i class="ti ti-checks"></i>
+          <div class="tutorial-item-text">
+            <div class="tutorial-item-title">אשרו הכל</div>
+            <div class="tutorial-item-desc">מאשר את כל השדות בסקשן הנוכחי</div>
+          </div>
+        </div>
+        <div class="tutorial-item">
+          <i class="ti ti-keyboard"></i>
+          <div class="tutorial-item-text">
+            <div class="tutorial-item-title">קיצורי מקלדת</div>
+            <div class="tutorial-item-desc">Enter=אישור, Tab=הבא, A=אשרו הכל, E=עריכה</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tutorial-checkbox">
+        <input type="checkbox" id="tutorial-dont-show">
+        <label for="tutorial-dont-show">אל תציגו שוב</label>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-tutorial-start">הבנתי, בואו נתחיל</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard Hint -->
+  <div class="keyboard-hint" id="keyboard-hint">
+    <kbd>Enter</kbd> אישור &nbsp;|&nbsp; <kbd>Tab</kbd> הבא &nbsp;|&nbsp; <kbd>A</kbd> אשרו הכל &nbsp;|&nbsp; <kbd>?</kbd> עזרה
+  </div>
+
+  <!-- Confetti Container -->
+  <div class="confetti-container" id="confetti-container"></div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+</html>
