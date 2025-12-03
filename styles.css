@@ -937,10 +937,16 @@ body.wizard-active .btn-mobile-menu {
    Responsive
    ============================================ */
 @media (max-width: 768px) {
+  .header {
+    padding: var(--space-2) var(--space-3);
+  }
+
   .header-container {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
-    padding: var(--space-3);
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0;
   }
 
   .header-brand {
@@ -957,11 +963,44 @@ body.wizard-active .btn-mobile-menu {
   .header-actions {
     order: 2;
     gap: var(--space-2);
+    flex-shrink: 0;
   }
 
   .header-right {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    gap: var(--space-2);
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .logo {
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    height: 28px;
+  }
+
+  .header-title {
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: none;
+  }
+
+  .header-step-indicator {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+  }
+
+  .header-step-indicator.visible {
+    display: block;
   }
 
   .hero-title {
@@ -1002,31 +1041,75 @@ body.wizard-active .btn-mobile-menu {
 }
 
 @media (max-width: 480px) {
-  .header-container {
+  .header {
     padding: var(--space-2);
+  }
+
+  .header-container {
+    gap: var(--space-1);
+  }
+
+  .header-right {
+    gap: var(--space-1);
   }
   
   .header-center {
     display: none;
   }
   
-  .header-logo img {
-    height: 28px;
+  .logo-icon {
+    height: 24px;
   }
   
   .header-title {
-    font-size: 0.85rem;
+    display: none;
+  }
+
+  .header-step-indicator {
+    font-size: 0.7rem;
+    max-width: 100px;
   }
   
   .btn {
-    padding: var(--space-2) var(--space-3);
-    font-size: 0.85rem;
+    padding: var(--space-2);
+    font-size: 0.8rem;
+    min-width: auto;
+  }
+
+  .btn i {
+    font-size: 16px;
+  }
+
+  .btn-secondary {
+    padding: var(--space-2);
+  }
+
+  /* Make buttons icon-only in mobile - hide text by making button square */
+  #btn-reset,
+  #btn-upload {
+    padding: var(--space-2);
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  #btn-reset i,
+  #btn-upload i {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  /* Hide text by clipping it */
+  #btn-reset > *:not(i),
+  #btn-upload > *:not(i) {
+    display: none;
   }
   
   .btn-icon {
     padding: var(--space-2);
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
   
   .welcome-hero-title {
@@ -1123,6 +1206,13 @@ body.wizard-active .btn-mobile-menu {
 
 .header-step-indicator.visible {
   display: block;
+}
+
+@media (max-width: 768px) {
+  .header-step-indicator.visible {
+    display: block;
+    margin-right: var(--space-2);
+  }
 }
 
 /* ============================================
