@@ -936,12 +936,13 @@ body.wizard-active .btn-mobile-menu {
 /* ============================================
    Responsive
    ============================================ */
+/* Mobile header styles - only when wizard is active */
 @media (max-width: 768px) {
-  .header {
+  body.wizard-active .header {
     padding: var(--space-2) var(--space-3);
   }
 
-  .header-container {
+  body.wizard-active .header-container {
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
@@ -960,13 +961,13 @@ body.wizard-active .btn-mobile-menu {
     margin-top: var(--space-2);
   }
   
-  .header-actions {
+  body.wizard-active .header-actions {
     order: 2;
     gap: var(--space-2);
     flex-shrink: 0;
   }
 
-  .header-right {
+  body.wizard-active .header-right {
     flex-direction: row;
     align-items: center;
     gap: var(--space-2);
@@ -975,15 +976,15 @@ body.wizard-active .btn-mobile-menu {
     overflow: hidden;
   }
 
-  .logo {
+  body.wizard-active .logo {
     flex-shrink: 0;
   }
 
-  .logo-icon {
+  body.wizard-active .logo-icon {
     height: 28px;
   }
 
-  .header-title {
+  body.wizard-active .header-title {
     font-size: 0.875rem;
     white-space: nowrap;
     overflow: hidden;
@@ -991,7 +992,7 @@ body.wizard-active .btn-mobile-menu {
     display: none;
   }
 
-  .header-step-indicator {
+  body.wizard-active .header-step-indicator {
     font-size: 0.75rem;
     white-space: nowrap;
     overflow: hidden;
@@ -999,7 +1000,7 @@ body.wizard-active .btn-mobile-menu {
     flex-shrink: 0;
   }
 
-  .header-step-indicator.visible {
+  body.wizard-active .header-step-indicator.visible {
     display: block;
   }
 
@@ -1041,15 +1042,15 @@ body.wizard-active .btn-mobile-menu {
 }
 
 @media (max-width: 480px) {
-  .header {
+  body.wizard-active .header {
     padding: var(--space-2);
   }
 
-  .header-container {
+  body.wizard-active .header-container {
     gap: var(--space-1);
   }
 
-  .header-right {
+  body.wizard-active .header-right {
     gap: var(--space-1);
   }
   
@@ -1057,36 +1058,36 @@ body.wizard-active .btn-mobile-menu {
     display: none;
   }
   
-  .logo-icon {
+  body.wizard-active .logo-icon {
     height: 24px;
   }
   
-  .header-title {
+  body.wizard-active .header-title {
     display: none;
   }
 
-  .header-step-indicator {
+  body.wizard-active .header-step-indicator {
     font-size: 0.7rem;
     max-width: 100px;
   }
   
-  .btn {
+  body.wizard-active .btn {
     padding: var(--space-2);
     font-size: 0.8rem;
     min-width: auto;
   }
 
-  .btn i {
+  body.wizard-active .btn i {
     font-size: 16px;
   }
 
-  .btn-secondary {
+  body.wizard-active .btn-secondary {
     padding: var(--space-2);
   }
 
   /* Make buttons icon-only in mobile - hide text by making button square */
-  #btn-reset,
-  #btn-upload {
+  body.wizard-active #btn-reset,
+  body.wizard-active #btn-upload {
     padding: var(--space-2);
     width: 36px;
     height: 36px;
@@ -1094,15 +1095,15 @@ body.wizard-active .btn-mobile-menu {
     overflow: hidden;
   }
 
-  #btn-reset i,
-  #btn-upload i {
+  body.wizard-active #btn-reset i,
+  body.wizard-active #btn-upload i {
     margin: 0;
     flex-shrink: 0;
   }
 
   /* Hide text by clipping it */
-  #btn-reset > *:not(i),
-  #btn-upload > *:not(i) {
+  body.wizard-active #btn-reset > *:not(i),
+  body.wizard-active #btn-upload > *:not(i) {
     display: none;
   }
   
@@ -1209,7 +1210,7 @@ body.wizard-active .btn-mobile-menu {
 }
 
 @media (max-width: 768px) {
-  .header-step-indicator.visible {
+  body.wizard-active .header-step-indicator.visible {
     display: block;
     margin-right: var(--space-2);
   }
@@ -1426,9 +1427,38 @@ body.wizard-active .btn-mobile-menu {
   50% { transform: translateY(-20px) rotate(3deg); }
 }
 
+/* Show floating card in mobile but with adjusted position */
 @media (max-width: 900px) {
   .welcome-floating-card {
-    display: none;
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    margin-left: -75px; /* Half of 150px width */
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .welcome-floating-card img {
+    width: 150px;
+    height: auto;
+    animation: floatCardMobile 4s ease-in-out infinite;
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.2));
+  }
+
+  @keyframes floatCardMobile {
+    0%, 100% { transform: translateY(0px) rotate(-5deg); }
+    50% { transform: translateY(-20px) rotate(3deg); }
+  }
+}
+
+@media (max-width: 600px) {
+  .welcome-floating-card {
+    top: -50px;
+    margin-left: -60px; /* Half of 120px width */
+  }
+
+  .welcome-floating-card img {
+    width: 120px;
   }
 }
 
