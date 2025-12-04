@@ -51,6 +51,7 @@ function cacheElements() {
   el.logoLarge = document.getElementById('logo-large');
   el.btnTheme = document.getElementById('btn-theme');
   el.btnReset = document.getElementById('btn-reset');
+  el.btnHeaderDownload = document.getElementById('btn-header-download');
   el.btnUpload = document.getElementById('btn-upload');
   el.btnMobileMenu = document.getElementById('btn-mobile-menu');
 
@@ -144,6 +145,9 @@ function setupEventListeners() {
   // Summary buttons
   el.btnSummaryReset.addEventListener('click', () => showModal('modal-reset'));
   el.btnDownload.addEventListener('click', downloadFile);
+  
+  // Header download button
+  el.btnHeaderDownload.addEventListener('click', downloadFile);
 
   // Resume modal
   el.btnResumeRestart.addEventListener('click', () => {
@@ -455,6 +459,102 @@ function flattenToFields(obj, prefix = '') {
 }
 
 // ============================================
+// Hierarchical Tree Building
+// ============================================
+function buildFieldTree(fields) {
+  const tree = {};
+  
+  fields.forEach(field => {
+    const parts = field.key.split('.');
+    let current = tree;
+    
+    // Navigate/create the tree structure
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      const isLast = i === parts.length - 1;
+      
+      if (isLast) {
+        // This is a leaf node (actual field)
+        if (!current._fields) {
+          current._fields = [];
+        }
+        current._fields.push(field);
+      } else {
+        // This is an intermediate node (group)
+        if (!current[part]) {
+          current[part] = { _isGroup: true, _expanded: true };
+        }
+        current = current[part];
+      }
+    }
+  });
+  
+  return tree;
+}
+
+// Count all fields in a group (including nested)
+function countFieldsInGroup(group) {
+  let count = 0;
+  if (group._fields) {
+    count += group._fields.length;
+  }
+  for (const key in group) {
+    if (key.startsWith('_')) continue;
+    count += countFieldsInGroup(group[key]);
+  }
+  return count;
+}
+
+// Count approved fields in a group
+function countApprovedInGroup(group) {
+  let count = 0;
+  if (group._fields) {
+    group._fields.forEach(field => {
+      if (state.approved.has(field.key)) count++;
+    });
+  }
+  for (const key in group) {
+    if (key.startsWith('_')) continue;
+    count += countApprovedInGroup(group[key]);
+  }
+  return count;
+}
+
+// Generate unique group path
+function getGroupPath(sectionName, parentPath, groupName) {
+  return parentPath ? `${parentPath}.${groupName}` : `${sectionName}.${groupName}`;
+}
+
+// Check if group is expanded (from state)
+function isGroupExpanded(groupPath) {
+  if (!state.expandedGroups) {
+    state.expandedGroups = new Set();
+    return true; // Default expanded
+  }
+  // If not in collapsedGroups, it's expanded (default state)
+  if (!state.collapsedGroups) {
+    return true;
+  }
+  return !state.collapsedGroups.has(groupPath);
+}
+
+// Toggle group expand/collapse
+window.toggleGroup = function(groupPath) {
+  if (!state.collapsedGroups) {
+    state.collapsedGroups = new Set();
+  }
+  
+  if (state.collapsedGroups.has(groupPath)) {
+    state.collapsedGroups.delete(groupPath);
+  } else {
+    state.collapsedGroups.add(groupPath);
+  }
+  
+  // Re-render current section
+  renderCurrentSection();
+};
+
+// ============================================
 // Screen Navigation
 // ============================================
 function showWelcomeScreen() {
@@ -464,6 +564,7 @@ function showWelcomeScreen() {
   el.progressBarContainer.classList.remove('visible');
   el.headerStep.classList.remove('visible');
   el.btnReset.style.display = 'none';
+  el.btnHeaderDownload.style.display = 'none';
   el.btnUpload.style.display = 'none';
   el.keyboardHint.classList.remove('visible');
   el.footer.style.display = 'block';
@@ -479,6 +580,7 @@ function showWizardScreen() {
   el.progressBarContainer.classList.add('visible');
   el.headerStep.classList.add('visible');
   el.btnReset.style.display = 'flex';
+  el.btnHeaderDownload.style.display = 'flex';
   el.btnUpload.style.display = 'none';
   el.keyboardHint.classList.add('visible');
   el.footer.style.display = 'none';
@@ -492,6 +594,7 @@ function showSummaryScreen() {
   el.progressBarContainer.classList.remove('visible');
   el.headerStep.classList.remove('visible');
   el.btnReset.style.display = 'flex';
+  el.btnHeaderDownload.style.display = 'flex';
   el.btnUpload.style.display = 'none';
   el.keyboardHint.classList.remove('visible');
   el.footer.style.display = 'block';
@@ -659,74 +762,11 @@ function renderCurrentSection() {
   el.sectionSubtitle.textContent = `${section.fields.length} שדות`;
   el.headerStep.textContent = `סקשן ${state.currentSectionIndex + 1} מתוך ${state.sections.length}`;
 
-  el.fieldsContainer.innerHTML = section.fields.map((field, index) => {
-    const isApproved = state.approved.has(field.key);
-    const isEdited = state.edited.hasOwnProperty(field.key);
-    const currentValue = isEdited ? state.edited[field.key] : field.originalValue;
-
-    // All cards start collapsed by default
-    let cardClasses = 'field-card';
-    if (isApproved) cardClasses += ' approved';
-    if (isEdited) cardClasses += ' edited';
-
-    // Use breadcrumb format for key display (for expanded state)
-    const breadcrumbKey = formatKeyAsBreadcrumb(field.key);
-    
-    // Truncate only the title for collapsed header display
-    const maxTitleChars = 50;
-    const truncatedTitle = currentValue.length > maxTitleChars 
-      ? currentValue.substring(0, maxTitleChars) + '...' 
-      : currentValue;
-
-    return `
-      <div class="${cardClasses}" data-key="${field.key}" data-index="${index}" onclick="handleFieldCardClick(event, '${escapeAttr(field.key)}')">
-        <div class="field-card-header">
-          <!-- Collapsed: Title (bold) on right, key path on left -->
-          <span class="field-card-title-preview">${escapeHtml(truncatedTitle)}</span>
-          <div class="field-card-key field-card-breadcrumb">${breadcrumbKey}</div>
-          <div class="field-card-badges">
-            ${isApproved ? '<span class="badge badge-approved">אושר</span>' : ''}
-            ${isEdited ? '<span class="badge badge-edited">נערך</span>' : ''}
-          </div>
-          <i class="ti ti-chevron-down field-card-expand-icon"></i>
-          <div class="field-card-actions">
-            <button class="entry-action-btn" onclick="event.stopPropagation(); copyToClipboard('${escapeAttr(currentValue)}')" title="העתקה">
-              <i class="ti ti-copy"></i>
-            </button>
-            ${isApproved ? `
-              <button class="entry-action-btn" onclick="event.stopPropagation(); unapproveField('${field.key}')" title="ביטול אישור">
-                <i class="ti ti-x"></i>
-              </button>
-            ` : ''}
-          </div>
-        </div>
-        <div class="field-card-content">
-          <div class="field-value-display">${escapeHtml(currentValue)}</div>
-          <div class="field-edit-area">
-            <label class="field-edit-label">ערך חדש:</label>
-            <textarea class="field-edit-textarea" data-key="${field.key}" data-original="${escapeAttr(field.originalValue)}" onclick="event.stopPropagation()">${escapeHtml(currentValue)}</textarea>
-          </div>
-        </div>
-        <div class="field-card-footer">
-          <button class="btn btn-secondary btn-edit" onclick="event.stopPropagation(); toggleEditMode('${field.key}')">
-            <i class="ti ti-edit"></i>
-            עריכה
-          </button>
-          <button class="btn btn-primary btn-approve" onclick="event.stopPropagation(); approveField('${field.key}')">
-            <i class="ti ti-check"></i>
-            אישור
-          </button>
-          <button class="btn btn-secondary btn-cancel" onclick="event.stopPropagation(); cancelEdit('${field.key}')">
-            ביטול
-          </button>
-          <button class="btn btn-primary btn-save" onclick="event.stopPropagation(); saveEdit('${field.key}')">
-            <i class="ti ti-check"></i>
-            שמור
-          </button>
-        </div>
-      </div>
-    `;
-  }).join('');
+  // Build tree structure from fields (skip the section name prefix)
+  const tree = buildFieldTreeFromSection(section);
+  
+  // Render the tree
+  el.fieldsContainer.innerHTML = renderFieldTree(tree, section.name, '', 0);
   
   // Add click handler for field card expansion
   window.handleFieldCardClick = function(event, key) {
@@ -752,6 +792,159 @@ function renderCurrentSection() {
   // Animate in
   el.wizardContent.classList.add('animate-slide-in');
   setTimeout(() => el.wizardContent.classList.remove('animate-slide-in'), 300);
+}
+
+// Build tree from section fields (removes section prefix from keys for tree building)
+function buildFieldTreeFromSection(section) {
+  const tree = {};
+  
+  section.fields.forEach(field => {
+    // Remove section name prefix from key for tree building
+    const keyWithoutSection = field.key.replace(`${section.name}.`, '');
+    const parts = keyWithoutSection.split('.');
+    let current = tree;
+    
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      const isLast = i === parts.length - 1;
+      
+      if (isLast) {
+        // Leaf node - store the field
+        if (!current._fields) {
+          current._fields = [];
+        }
+        current._fields.push(field);
+      } else {
+        // Intermediate node - create group if needed
+        if (!current[part]) {
+          current[part] = { _isGroup: true };
+        }
+        current = current[part];
+      }
+    }
+  });
+  
+  return tree;
+}
+
+// Render the tree recursively
+function renderFieldTree(tree, sectionName, parentPath, depth) {
+  let html = '';
+  
+  // First, render direct fields (if any)
+  if (tree._fields && tree._fields.length > 0) {
+    tree._fields.forEach((field, index) => {
+      html += renderFieldCard(field, index);
+    });
+  }
+  
+  // Then, render child groups
+  const groups = Object.keys(tree).filter(k => !k.startsWith('_'));
+  
+  groups.forEach(groupName => {
+    const group = tree[groupName];
+    const groupPath = parentPath ? `${parentPath}.${groupName}` : `${sectionName}.${groupName}`;
+    const isExpanded = isGroupExpanded(groupPath);
+    const totalFields = countFieldsInGroup(group);
+    const approvedFields = countApprovedInGroup(group);
+    const isComplete = totalFields > 0 && approvedFields === totalFields;
+    
+    html += `
+      <div class="field-group ${isExpanded ? 'expanded' : 'collapsed'} ${isComplete ? 'complete' : ''}" data-group="${groupPath}" data-depth="${depth}">
+        <div class="field-group-header" onclick="toggleGroup('${escapeAttr(groupPath)}')" style="padding-right: ${depth * 16}px;">
+          <i class="ti ${isExpanded ? 'ti-chevron-down' : 'ti-chevron-left'} field-group-arrow"></i>
+          <span class="field-group-name">${groupName}</span>
+          <span class="field-group-count">${approvedFields}/${totalFields}</span>
+          ${isComplete ? '<i class="ti ti-check field-group-check"></i>' : ''}
+        </div>
+        <div class="field-group-content" style="${isExpanded ? '' : 'display: none;'}">
+          ${renderFieldTree(group, sectionName, groupPath, depth + 1)}
+        </div>
+      </div>
+    `;
+  });
+  
+  return html;
+}
+
+// Render a single field card
+function renderFieldCard(field, index) {
+  const isApproved = state.approved.has(field.key);
+  const isEdited = state.edited.hasOwnProperty(field.key);
+  const currentValue = isEdited ? state.edited[field.key] : field.originalValue;
+
+  let cardClasses = 'field-card';
+  if (isApproved) cardClasses += ' approved';
+  if (isEdited) cardClasses += ' edited';
+
+  // Use breadcrumb format for key display
+  const breadcrumbKey = formatKeyAsBreadcrumb(field.key);
+  
+  // Get just the last part of the key for the title (the field name)
+  const keyParts = field.key.split('.');
+  const fieldName = keyParts[keyParts.length - 1];
+  
+  // Truncate the value for collapsed header display
+  const maxTitleChars = 50;
+  const truncatedTitle = currentValue.length > maxTitleChars 
+    ? currentValue.substring(0, maxTitleChars) + '...' 
+    : currentValue;
+
+  return `
+    <div class="${cardClasses}" data-key="${field.key}" data-index="${index}" onclick="handleFieldCardClick(event, '${escapeAttr(field.key)}')">
+      <div class="field-card-header">
+        <span class="field-card-title-preview">${escapeHtml(truncatedTitle)}</span>
+        <div class="field-card-key field-card-breadcrumb">${breadcrumbKey}</div>
+        <div class="field-card-badges">
+          ${isApproved ? '<span class="badge badge-approved">אושר</span>' : ''}
+          ${isEdited ? '<span class="badge badge-edited">נערך</span>' : ''}
+        </div>
+        <div class="field-card-quick-actions">
+          <button class="quick-action-btn approve" onclick="event.stopPropagation(); quickApproveField('${escapeAttr(field.key)}')" title="אישור מהיר" ${isApproved ? 'style="display:none"' : ''}>
+            <i class="ti ti-check"></i>
+          </button>
+          <button class="quick-action-btn edit" onclick="event.stopPropagation(); quickEditField('${escapeAttr(field.key)}')" title="עריכה מהירה">
+            <i class="ti ti-edit"></i>
+          </button>
+        </div>
+        <i class="ti ti-chevron-down field-card-expand-icon"></i>
+        <div class="field-card-actions">
+          <button class="entry-action-btn" onclick="event.stopPropagation(); copyToClipboard('${escapeAttr(currentValue)}')" title="העתקה">
+            <i class="ti ti-copy"></i>
+          </button>
+          ${isApproved ? `
+            <button class="entry-action-btn" onclick="event.stopPropagation(); unapproveField('${field.key}')" title="ביטול אישור">
+              <i class="ti ti-x"></i>
+            </button>
+          ` : ''}
+        </div>
+      </div>
+      <div class="field-card-content">
+        <div class="field-value-display">${escapeHtml(currentValue)}</div>
+        <div class="field-edit-area">
+          <label class="field-edit-label">ערך חדש:</label>
+          <textarea class="field-edit-textarea" data-key="${field.key}" data-original="${escapeAttr(field.originalValue)}" onclick="event.stopPropagation()">${escapeHtml(currentValue)}</textarea>
+        </div>
+      </div>
+      <div class="field-card-footer">
+        <button class="btn btn-secondary btn-edit" onclick="event.stopPropagation(); toggleEditMode('${field.key}')">
+          <i class="ti ti-edit"></i>
+          עריכה
+        </button>
+        <button class="btn btn-primary btn-approve" onclick="event.stopPropagation(); approveField('${field.key}')">
+          <i class="ti ti-check"></i>
+          אישור
+        </button>
+        <button class="btn btn-secondary btn-cancel" onclick="event.stopPropagation(); cancelEdit('${field.key}')">
+          ביטול
+        </button>
+        <button class="btn btn-primary btn-save" onclick="event.stopPropagation(); saveEdit('${field.key}')">
+          <i class="ti ti-check"></i>
+          שמור
+        </button>
+      </div>
+    </div>
+  `;
 }
 
 // ============================================
@@ -831,6 +1024,7 @@ window.approveField = function(key) {
   card.classList.remove('editing', 'expanded');
 
   updateFieldBadges(card, key);
+  updateQuickActionButtons(card, key);
   saveProgress();
   updateProgress();
   renderMinimap();
@@ -846,6 +1040,67 @@ window.approveField = function(key) {
   checkSectionCompletion();
 };
 
+// Quick approve from collapsed card (doesn't expand)
+window.quickApproveField = function(key) {
+  const card = document.querySelector(`.field-card[data-key="${key}"]`);
+  if (!card) return;
+  
+  // If already approved, do nothing
+  if (state.approved.has(key)) return;
+
+  state.approved.add(key);
+  card.classList.add('approved', 'animate-approve');
+
+  updateFieldBadges(card, key);
+  updateQuickActionButtons(card, key);
+  saveProgress();
+  updateProgress();
+  renderMinimap();
+
+  // Track consecutive approvals
+  state.consecutiveApprovals++;
+  if (state.consecutiveApprovals >= 10) {
+    triggerConfetti(30);
+    state.consecutiveApprovals = 0;
+  }
+
+  // Check section completion
+  checkSectionCompletion();
+};
+
+// Quick edit - expands card AND enters edit mode
+window.quickEditField = function(key) {
+  const card = document.querySelector(`.field-card[data-key="${key}"]`);
+  if (!card) return;
+  
+  // Close all other cards first
+  closeAllFieldCards();
+  
+  // Expand this card and enter edit mode
+  card.classList.add('expanded', 'editing');
+  
+  // Focus the textarea
+  const textarea = card.querySelector('.field-edit-textarea');
+  if (textarea) {
+    setTimeout(() => {
+      textarea.focus();
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+};
+
+// Update quick action buttons visibility
+function updateQuickActionButtons(card, key) {
+  const quickApproveBtn = card.querySelector('.quick-action-btn.approve');
+  if (quickApproveBtn) {
+    if (state.approved.has(key)) {
+      quickApproveBtn.style.display = 'none';
+    } else {
+      quickApproveBtn.style.display = 'flex';
+    }
+  }
+}
+
 window.unapproveField = function(key) {
   const card = document.querySelector(`.field-card[data-key="${key}"]`);
   if (!card) return;
@@ -857,6 +1112,7 @@ window.unapproveField = function(key) {
   card.classList.add('expanded');
 
   updateFieldBadges(card, key);
+  updateQuickActionButtons(card, key);
   saveProgress();
   updateProgress();
   renderMinimap();

@@ -2619,3 +2619,216 @@ body.wizard-active .btn-mobile-menu {
 
 /* Removed old confetti animation - using cardFall instead */
 
+/* ============================================
+   Header Download Button - Mobile Responsive
+   ============================================ */
+#btn-header-download .btn-text {
+  display: inline;
+}
+
+@media (max-width: 600px) {
+  #btn-header-download .btn-text {
+    display: none;
+  }
+  
+  #btn-header-download {
+    padding: var(--space-3);
+  }
+}
+
+/* ============================================
+   Quick Actions on Collapsed Cards
+   ============================================ */
+.field-card-quick-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-right: auto;
+  margin-left: var(--space-2);
+}
+
+.field-card.expanded .field-card-quick-actions {
+  display: none;
+}
+
+.quick-action-btn {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+  font-size: 16px;
+}
+
+.quick-action-btn.approve {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--color-success);
+}
+
+.quick-action-btn.approve:hover {
+  background: var(--color-success);
+  color: white;
+  transform: scale(1.1);
+}
+
+.quick-action-btn.edit {
+  background: var(--bg-cream);
+  color: var(--text-muted);
+}
+
+.quick-action-btn.edit:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Hide approve button on already approved cards */
+.field-card.approved .quick-action-btn.approve {
+  display: none;
+}
+
+/* Mobile: Larger touch targets */
+@media (max-width: 600px) {
+  .quick-action-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    font-size: 18px;
+  }
+  
+  .field-card-quick-actions {
+    gap: var(--space-1);
+  }
+}
+
+/* ============================================
+   Hierarchical Collapsible Groups
+   ============================================ */
+.field-group {
+  margin-bottom: var(--space-2);
+}
+
+.field-group-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-section);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border-right: 3px solid var(--border-color);
+  margin-bottom: var(--space-2);
+  user-select: none;
+}
+
+.field-group-header:hover {
+  background: var(--border-color);
+  border-right-color: var(--color-primary);
+}
+
+.field-group.complete .field-group-header {
+  border-right-color: var(--color-success);
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.field-group-arrow {
+  font-size: 16px;
+  color: var(--text-muted);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.field-group.collapsed .field-group-arrow {
+  transform: rotate(0deg);
+}
+
+.field-group.expanded .field-group-arrow {
+  transform: rotate(0deg);
+}
+
+/* RTL: Arrow directions */
+[dir="rtl"] .field-group.collapsed .field-group-arrow {
+  transform: rotate(180deg);
+}
+
+.field-group-name {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex: 1;
+  direction: ltr;
+  text-align: left;
+}
+
+.field-group-count {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  background: var(--bg-card);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+}
+
+.field-group.complete .field-group-count {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--color-success);
+}
+
+.field-group-check {
+  font-size: 16px;
+  color: var(--color-success);
+  flex-shrink: 0;
+}
+
+.field-group-content {
+  padding-right: var(--space-4);
+  border-right: 2px solid var(--border-light);
+  margin-right: var(--space-2);
+}
+
+/* Nested depth indentation */
+.field-group[data-depth="0"] > .field-group-content {
+  padding-right: var(--space-3);
+}
+
+.field-group[data-depth="1"] > .field-group-content {
+  padding-right: var(--space-3);
+}
+
+.field-group[data-depth="2"] > .field-group-content {
+  padding-right: var(--space-3);
+}
+
+/* Mobile adjustments for groups */
+@media (max-width: 600px) {
+  .field-group-header {
+    padding: var(--space-3);
+    gap: var(--space-2);
+  }
+  
+  .field-group-name {
+    font-size: 0.85rem;
+  }
+  
+  .field-group-content {
+    padding-right: var(--space-2);
+    margin-right: var(--space-1);
+  }
+  
+  .field-group-arrow {
+    font-size: 14px;
+  }
+}
+
+/* Animation for expanding/collapsing */
+.field-group-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
