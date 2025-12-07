@@ -1,0 +1,1784 @@
+{
+  "$meta": {
+    "version": "1.0.0",
+    "language": "he",
+    "direction": "rtl",
+    "lastUpdated": "2025-12-03",
+    "totalKeys": 907,
+    "extractedFrom": [
+      "LoginPage.tsx",
+      "IDInput.tsx",
+      "PhoneInput.tsx",
+      "CardDigitsInput.tsx",
+      "DashboardPage.tsx",
+      "DashboardHeader.tsx",
+      "SummaryStatistics.tsx",
+      "CardsPreview.tsx",
+      "PoliciesPreview.tsx",
+      "PolicyCard.tsx",
+      "NotificationsSection.tsx",
+      "QuickActionsSection.tsx",
+      "RecentActivity.tsx",
+      "PoliciesPage.tsx",
+      "policies/PolicyCard.tsx",
+      "policies/FilterSortBar.tsx",
+      "policies/EmptyState.tsx",
+      "policies/ErrorState.tsx",
+      "policies/CancelPolicyWizardPage.tsx",
+      "policies/CancelPolicyStep1.tsx",
+      "policies/CancelPolicyStep2.tsx",
+      "policies/CancelPolicyStep3.tsx",
+      "policies/cancellationReasons.ts",
+      "policies/CancelSuccessModal.tsx",
+      "policies/UpdatePolicyWizardPage.tsx",
+      "policies/UpdatePolicyStep1.tsx",
+      "policies/UpdatePolicyStep2.tsx",
+      "policies/UpdatePolicyStep3.tsx",
+      "policies/UpdatePolicyStep4.tsx",
+      "policies/UpdatePolicySuccessScreen.tsx",
+      "policies/PolicySummaryCard.tsx",
+      "cards/CardsPage.tsx",
+      "cards/CardsGallery.tsx",
+      "cards/CardsFilter.tsx",
+      "cards/CardDetailsPanel.tsx",
+      "cards/CreditCardComponent.tsx",
+      "cards/ReportCardModal.tsx",
+      "cards/CardsEmptyState.tsx",
+      "cards/load/Step3CurrentLocation.tsx",
+      "cards/load/Step3BaggageDocumentUpload.tsx",
+      "cards/load/Step4IncidentDescription.tsx",
+      "cards/load/Step4Part1BaggageSummary.tsx",
+      "cards/load/Step4Part2BaggageGuarantee.tsx",
+      "cards/load/Step5TreatmentType.tsx",
+      "cards/load/Step6Part1Terms.tsx",
+      "cards/load/Step6Part2GuaranteeCard.tsx",
+      "cards/load/Step6Part3Summary.tsx",
+      "cards/load/CreditGuardIframe.tsx",
+      "claims/ClaimsPage.tsx",
+      "claims/ClaimCard.tsx",
+      "claims/ClaimCardSkeleton.tsx",
+      "claims/ClaimsFilterBar.tsx",
+      "claims/ClaimDetailsSection.tsx",
+      "claims/CustomerNotesModal.tsx",
+      "claims/DocumentsList.tsx",
+      "claims/PaymentDetailsBox.tsx",
+      "claims/StatusBadge.tsx",
+      "claims/ClaimsEmptyState.tsx",
+      "claims/ClaimsErrorState.tsx",
+      "claims/post-paid/PostPaidClaimWizardPage.tsx",
+      "claims/post-paid/Step1PolicyAndType.tsx",
+      "claims/post-paid/Step2EventDetails.tsx",
+      "claims/post-paid/Step3DocumentUpload.tsx",
+      "claims/post-paid/Step4BankDetails.tsx",
+      "claims/post-paid/Step5SummarySubmit.tsx",
+      "claims/post-paid/Step6Success.tsx",
+      "claims/post-paid/FileUploadZone.tsx",
+      "claims/post-paid/UploadedFilesList.tsx",
+      "profile/UpdateDetailsScreen.tsx",
+      "profile/TravelerAccordion.tsx",
+      "AccessibilityStatementPage.tsx",
+      "components/FileUploadQueue.tsx",
+      "components/FileUploadZone.tsx",
+      "components/MissingDocumentsSection.tsx",
+      "components/UploadDocumentsModal.tsx",
+      "api/dashboard.api.ts",
+      "api/claims.api.ts",
+      "api/policies.api.ts",
+      "api/hooks/useCards.ts",
+      "api/hooks/useCustomerProfile.ts",
+      "api/hooks/useDashboardData.ts",
+      "api/hooks/useDashboardDataWithCountries.ts",
+      "api/hooks/useMessages.ts",
+      "api/hooks/usePoliciesWithCountries.ts",
+      "api/hooks/usePolicyByIdWithCountries.ts",
+      "routes/ProtectedRoute.tsx"
+    ]
+  },
+
+  "common": {
+    "api": {
+      "errors": {
+        "dashboardLoadError": "שגיאה בטעינת נתוני דף הבית",
+        "networkError": "שגיאת רשת. אנא נסה שנית",
+        "claimTypesLoadError": "שגיאה בטעינת סוגי תביעות",
+        "caseTypesLoadError": "שגיאה בטעינת סוגי המקרים",
+        "invalidDate": "תאריך לא תקין",
+        "sessionExpired": "פג תוקף ההתחברות. אנא התחבר מחדש",
+        "policiesLoadError": "שגיאה בטעינת פוליסות",
+        "documentsLoadError": "שגיאה בטעינת רשימת המסמכים",
+        "claimAccessDenied": "אין הרשאה לצפות בתביעה זו",
+        "claimNotFound": "תביעה לא נמצאה",
+        "claimDetailsLoadError": "שגיאה בטעינת פרטי התביעה",
+        "fileAccessDenied": "אין הרשאה להוריד קובץ זה",
+        "fileNotFound": "קובץ לא נמצא",
+        "fileDownloadError": "שגיאה בהורדת הקובץ",
+        "claimsLoadError": "שגיאה בטעינת התביעות",
+        "uploadError": "שגיאה בהעלאת המסמכים. אנא נסה שנית",
+        "serverError": "חלה שגיאה. אנא נסה שנית",
+        "networkRetryError": "שגיאת רשת. אנא נסה שנית",
+        "policyLoadError": "שגיאה בטעינת הפוליסות",
+        "policyDetailsLoadError": "שגיאה בטעינת פרטי הפוליסה",
+        "travelersLoadError": "שגיאה בטעינת רשימת המבוטחים",
+        "cancellationReasonsLoadError": "שגיאה בטעינת סיבות ביטול",
+        "policyCancelNotAllowed": "לא ניתן לבטל פוליסה זו",
+        "policyNotFound": "פוליסה לא נמצאה",
+        "refundCalculationError": "שגיאה בחישוב זיכוי",
+        "policyCancelError": "שגיאה בביטול הפוליסה",
+        "customerProfileLoadError": "שגיאה בטעינת פרטי לקוח",
+        "messagesLoadError": "שגיאה בטעינת הודעות"
+      }
+    },
+    "buttons": {
+      "submit": "שלח",
+      "tryAgain": "נסה שנית",
+      "cancel": "ביטול",
+      "save": "שמור",
+      "back": "חזרה",
+      "next": "הבא",
+      "continue": "המשך",
+      "close": "סגור",
+      "confirm": "אישור",
+      "delete": "מחק",
+      "edit": "עריכה",
+      "retry": "נסה שנית",
+      "search": "חיפוש",
+      "filter": "סינון",
+      "clear": "נקה",
+      "upload": "העלאה",
+      "download": "הורדה",
+      "view": "צפייה",
+      "viewAll": "צפה בכל",
+      "showMore": "הצג עוד",
+      "showLess": "הצג פחות"
+    },
+    "status": {
+      "loading": "טוען...",
+      "saving": "שומר...",
+      "sending": "שולח...",
+      "processing": "מעבד...",
+      "verifying": "מאמת...",
+      "justAMoment": "רק עוד רגע..."
+    },
+    "errors": {
+      "required": "שדה חובה",
+      "invalid": "ערך לא תקין",
+      "serverError": "שגיאה בשרת. אנא נסה שנית",
+      "networkError": "שגיאת רשת. אנא נסה שנית",
+      "unexpectedError": "שגיאה לא צפויה",
+      "sessionExpired": "פג תוקף ההתחברות",
+      "notFound": "לא נמצא",
+      "unauthorized": "אין הרשאה"
+    },
+    "empty": {
+      "noData": "אין נתונים להצגה",
+      "noResults": "לא נמצאו תוצאות"
+    },
+    "fields": {
+      "notSpecified": "לא צוין"
+    },
+    "country": {
+      "fallback": "מדינה {{id}}"
+    },
+    "creditGuard": {
+      "errors": {
+        "invalidCard": "מספר כרטיס לא תקין",
+        "cardExpired": "תוקף הכרטיס פג",
+        "invalidCvv": "CVV לא תקין",
+        "cardDeclined": "כרטיס נדחה על ידי חברת האשראי",
+        "networkError": "אין חיבור למערכת התשלומים. נסה שוב",
+        "timeout": "זמן האימות פג. נסה שוב",
+        "securityError": "שגיאה באבטחה. נא לרענן את הדף",
+        "storageFailed": "שגיאה בשמירת כרטיס. נסה שוב",
+        "generic": "אירעה שגיאה. נסה שוב מאוחר יותר"
+      },
+      "whatsappMessage": "שלום, אני נתקל בבעיה בהוספת כרטיס ערבון. שגיאה: {{errorCode}}"
+    },
+    "validation": {
+      "minLength": "מינימום {{min}} תווים",
+      "maxLength": "מקסימום {{max}} תווים",
+      "email": "אנא הזן כתובת אימייל תקינה",
+      "phone": "אנא הזן מספר טלפון תקין",
+      "number": "יש להזין מספר",
+      "date": "תאריך לא תקין",
+      "file": {
+        "invalidType": "סוג קובץ לא נתמך. נא להעלות PDF, JPG, PNG או DOCX בלבד",
+        "tooLarge": "הקובץ '{{name}}' גדול מדי. גודל מקסימלי: 12MB"
+      },
+      "profile": {
+        "firstName": {
+          "minLength": "שם פרטי חייב להכיל לפחות 2 תווים",
+          "maxLength": "שם פרטי ארוך מדי"
+        },
+        "lastName": {
+          "minLength": "שם משפחה חייב להכיל לפחות 2 תווים",
+          "maxLength": "שם משפחה ארוך מדי"
+        },
+        "firstNameEnglish": {
+          "minLength": "First name must be at least 2 characters",
+          "maxLength": "First name too long"
+        },
+        "lastNameEnglish": {
+          "minLength": "Last name must be at least 2 characters",
+          "maxLength": "Last name too long"
+        },
+        "email": {
+          "required": "כתובת דואר אלקטרוני נדרשת",
+          "invalid": "אנא הזן כתובת אימייל תקינה",
+          "maxLength": "כתובת דואר אלקטרוני ארוכה מדי"
+        },
+        "phone": {
+          "format": "מספר טלפון נייד חייב להיות בפורמט 05XXXXXXXX",
+          "length": "מספר טלפון נייד חייב להכיל 10 ספרות"
+        },
+        "landline": {
+          "invalid": "מספר טלפון קווי אינו תקין"
+        },
+        "address": {
+          "city": {
+            "required": "נא לבחור עיר מהרשימה",
+            "maxLength": "שם עיר ארוך מדי"
+          },
+          "street": {
+            "minLength": "נא להזין שם רחוב (2-100 תווים)",
+            "maxLength": "שם רחוב ארוך מדי"
+          },
+          "houseNumber": {
+            "required": "נא להזין מספר בית",
+            "maxLength": "מספר בית ארוך מדי"
+          },
+          "entrance": {
+            "maxLength": "כניסה יכולה להכיל עד 10 תווים"
+          },
+          "zipCode": {
+            "format": "מיקוד חייב להכיל 7 ספרות",
+            "length": "מיקוד חייב להכיל 7 ספרות"
+          },
+          "floor": {
+            "maxLength": "קומה יכולה להכיל עד 10 תווים"
+          },
+          "apartment": {
+            "maxLength": "דירה יכולה להכיל עד 10 תווים"
+          }
+        }
+      }
+    },
+    "accessibility": {
+      "loading": "טוען...",
+      "menuOpen": "פתח תפריט",
+      "menuClose": "סגור תפריט",
+      "newWindow": "נפתח בחלון חדש",
+      "required": "שדה חובה"
+    },
+    "datetime": {
+      "days": {
+        "sunday": "יום ראשון",
+        "monday": "יום שני",
+        "tuesday": "יום שלישי",
+        "wednesday": "יום רביעי",
+        "thursday": "יום חמישי",
+        "friday": "יום שישי",
+        "saturday": "יום שבת"
+      },
+      "daysShort": {
+        "sun": "א'",
+        "mon": "ב'",
+        "tue": "ג'",
+        "wed": "ד'",
+        "thu": "ה'",
+        "fri": "ו'",
+        "sat": "ש'"
+      },
+      "months": {
+        "january": "ינואר",
+        "february": "פברואר",
+        "march": "מרץ",
+        "april": "אפריל",
+        "may": "מאי",
+        "june": "יוני",
+        "july": "יולי",
+        "august": "אוגוסט",
+        "september": "ספטמבר",
+        "october": "אוקטובר",
+        "november": "נובמבר",
+        "december": "דצמבר"
+      }
+    },
+    "greetings": {
+      "morning": "בוקר טוב",
+      "afternoon": "צהריים טובים",
+      "evening": "ערב טוב"
+    },
+    "relativeTime": {
+      "dateNotAvailable": "תאריך לא זמין",
+      "justNow": "זה עתה",
+      "minutesAgo": "לפני {{count}} דקות",
+      "hoursAgo": "לפני {{count}} שעות",
+      "yesterday": "אתמול",
+      "daysAgo": "לפני {{count}} ימים",
+      "weeksAgo": "לפני {{count}} שבועות",
+      "monthsAgo": "לפני {{count}} חודשים"
+    }
+  },
+
+  "auth": {
+    "login": {
+      "title": "ברוכים הבאים לאזור האישי של PassportCard",
+      "subtitle": "אנא מלאו את הפרטים כדי להיכנס לאזור האישי של PassportCard",
+      "switchMethod": "החלף שיטת התחברות"
+    },
+    "fields": {
+      "idNumber": {
+        "label": "מספר זהות",
+        "error": "אנא הזן תעודת זהות תקינה",
+        "errors": {
+          "digitsOnly": "מספר זהות חייב להכיל ספרות בלבד",
+          "length": "מספר זהות חייב להכיל 9 ספרות"
+        }
+      },
+      "phone": {
+        "label": "טלפון נייד",
+        "helperText": "פורמט: 05XXXXXXXX",
+        "errors": {
+          "digitsOnly": "מספר טלפון חייב להכיל ספרות בלבד",
+          "startsWith05": "מספר טלפון חייב להתחיל ב-05",
+          "length": "מספר טלפון חייב להכיל 10 ספרות"
+        }
+      },
+      "cardDigits": {
+        "label": "4 ספרות אחרונות של הכרטיס PassportCard",
+        "ariaLabel": "4 ספרות אחרונות",
+        "helperText": "4 ספרות בלבד",
+        "errors": {
+          "digitsOnly": "יש להזין ספרות בלבד",
+          "length": "יש להזין 4 ספרות בדיוק"
+        }
+      }
+    },
+    "otp": {
+      "title": "אימות קוד",
+      "codeSentTo": "קוד אישור נשלח לטלפון שמספרו",
+      "enterCode": "הזן קוד אימות",
+      "verifyButton": "אימות",
+      "resendCode": "לא קיבלת קוד? שלח שוב",
+      "resendIn": "שלח שוב בעוד {{seconds}} שניות",
+      "errors": {
+        "invalidCode": "קוד אימות שגוי, נסה שנית (נותרו {{attempts}} ניסיונות)",
+        "expiredCode": "קוד אימות פג תוקף, בקש קוד חדש",
+        "tooManyAttempts": "חרגת ממספר ניסיונות מותר, נסה שוב בעוד 15 דקות",
+        "tooManyRequests": "חרגת ממספר בקשות מותר, נסה שוב בעוד שעה",
+        "codeLength": "קוד אימות חייב להכיל 6 ספרות",
+        "codeLengthDev": "קוד אימות חייב להכיל 1-6 ספרות"
+      }
+    },
+    "accessibility": {
+      "submitLoginForm": "שלח טופס התחברות",
+      "verifyOtp": "אמת קוד אימות",
+      "resendCode": "שלח קוד שוב",
+      "switchMethod": "החלף שיטת התחברות"
+    }
+  },
+  "dashboard": {
+    "pageTitle": "דשבורד - PassportCard אזור אישי",
+    "ariaLabel": "דף הבית",
+    "description": "כאן תוכלו לצפות בפוליסות שלכם, לנהל כרטיסים, לעקוב אחרי תביעות ולבצע פעולות מהירות",
+    "sections": {
+      "cards": "הכרטיסים שלי",
+      "policies": "הפוליסות שלי",
+      "notifications": "התראות",
+      "quickActions": "פעולות מהירות",
+      "recentActivity": "פעילות אחרונה"
+    },
+    "statistics": {
+      "ariaLabel": "סיכום חשבון",
+      "error": "שגיאה בטעינת סטטיסטיקות",
+      "activePolicies": "פוליסות פעילות",
+      "futurePolicies": "פוליסות עתידיות",
+      "pendingClaims": "תביעות פתוחות",
+      "waitingForInfo": "ממתין למידע"
+    },
+    "cards": {
+      "error": "שגיאה בטעינת כרטיסים",
+      "emptyTitle": "אין לך כרטיסים פעילים כרגע",
+      "viewAllAction": "הצג את כל הכרטיסים",
+      "viewAllAria": "הצג הכל ({{count}} כרטיסים)",
+      "viewAllButton": "הצג הכל ({{count}})"
+    },
+    "policies": {
+      "viewAll": "הצג הכל",
+      "error": "שגיאה בטעינת פוליסות",
+      "emptyTitle": "לא נמצאו פוליסות פעילות",
+      "viewAllAction": "הצג את כל הפוליסות",
+      "viewAllAria": "הצג הכל ({{count}} פוליסות)",
+      "viewAllButton": "הצג הכל ({{count}})"
+    },
+    "policyCard": {
+      "ariaLabel": "פוליסה {{number}} - {{status}}",
+      "policyNumber": "פוליסה {{number}}",
+      "destinations": "יעדים:",
+      "dates": "תאריכים:",
+      "daysRemaining": "נותרו {{count}} ימים"
+    },
+    "notifications": {
+      "error": "שגיאה בטעינת התראות",
+      "emptyTitle": "אין התראות חדשות",
+      "emptySubtext": "הכל מעודכן!",
+      "goTo": "עבור ל-{{title}}",
+      "viewAll": "צפה בכל ההתראות ({{count}})"
+    },
+    "quickActions": {
+      "postPaidClaim": {
+        "label": "הגשת תביעה",
+        "description": "הגש תביעה למקרה שכבר קרה"
+      },
+      "viewPolicies": {
+        "label": "הצג את הפוליסות שלי",
+        "description": "ניהול הפוליסות הפעילות"
+      },
+      "viewClaims": {
+        "label": "הצג את התביעות שלי",
+        "description": "עקוב אחר סטטוס התביעות"
+      },
+      "appointAgent": {
+        "label": "מינוי סוכן ביטוח",
+        "description": "קבע סוכן ביטוח"
+      }
+    },
+    "recentActivity": {
+      "error": "שגיאה בטעינת פעילות אחרונה",
+      "emptyTitle": "אין פעילות אחרונה",
+      "emptySubtext": "הפעולות האחרונות שלך יופיעו כאן",
+      "claimSubmitted": "תביעה {{id}} הוגשה",
+      "policyUpdated": "פוליסה {{number}} התעדכנה",
+      "newMessage": "הודעה חדשה: {{subject}}"
+    },
+    "derivedNotifications": {
+      "policyStartingTitle": "פוליסה תתחיל בקרוב",
+      "policyStartingMessage": "פוליסה {{policyNumber}} תתחיל בעוד {{days}} ימים",
+      "viewPolicyAction": "צפה בפוליסה",
+      "policyExpiringTitle": "פוליסה תפוג בקרוב",
+      "policyExpiringMessage": "פוליסה {{policyNumber}} תפוג בעוד {{days}} ימים",
+      "newMessageTitle": "הודעה חדשה",
+      "readMessageAction": "קרא הודעה",
+      "claimSubmittedTitle": "תביעה הוגשה",
+      "claimSubmittedMessage": "תביעה {{claimId}} - {{claimType}}",
+      "claimWaitingTitle": "תביעה ממתינה למידע",
+      "claimWaitingMessage": "תביעה {{claimId}} ממתינה למסמכים נוספים",
+      "claimApprovedTitle": "תביעה אושרה",
+      "claimApprovedMessage": "תביעה {{claimId}} אושרה לתשלום",
+      "claimInProgressTitle": "תביעה בטיפול",
+      "claimInProgressMessage": "תביעה {{claimId}} נמצאת בטיפול",
+      "viewClaimAction": "צפה בתביעה"
+    }
+  },
+  "policies": {
+    "pageTitle": "הפוליסות שלי - פספורטכארד אזור אישי",
+    "empty": {
+      "ariaLabel": "לא נמצאו פוליסות",
+      "title": "אין לך פוליסות כרגע",
+      "description": "רכשת ביטוח נסיעות? הפוליסות שלך יופיעו כאן",
+      "purchaseButtonAria": "עבור לאתר פספורטכארד לרכישת ביטוח נסיעות",
+      "purchaseButton": "רכישת ביטוח נסיעות"
+    },
+    "error": {
+      "ariaLabel": "שגיאה בטעינת פוליסות",
+      "title": "שגיאה בטעינת הפוליסות",
+      "description": "אנא נסה שנית או צור קשר עם שירות לקוחות",
+      "retryButtonAria": "נסה לטעון את הפוליסות שוב",
+      "retryButton": "נסה שנית",
+      "contactLinkAria": "התקשר לשירות לקוחות פספורטכארד",
+      "contactLink": "צור קשר"
+    },
+    "title": "הפוליסות שלי",
+    "loadingAriaLabel": "טוען פוליסות",
+    "noFilterResults": "לא נמצאו פוליסות התואמות לסינון שנבחר",
+    "announcements": {
+      "pageLoaded": "דף הפוליסות נטען. נמצאו {{count}} פוליסות",
+      "focusedPolicy": "עבר לפוליסה מספר {{number}}"
+    },
+    "status": {
+      "active": "פעיל",
+      "future": "עתידי",
+      "expired": "פג תוקף",
+      "cancelled": "מבוטל"
+    },
+    "statusFeminine": {
+      "active": "פעילה",
+      "future": "עתידית",
+      "expired": "לא פעילה",
+      "cancelled": "מבוטלת",
+      "unknown": "לא ידוע"
+    },
+    "card": {
+      "travelers": "נוסעים:",
+      "amount": "סכום:",
+      "showDetails": "הצג פרטים",
+      "hideDetails": "סגור פרטים",
+      "toggleDetailsAria": {
+        "show": "הצג פרטים של פוליסה {{number}}",
+        "hide": "סגור פרטים של פוליסה {{number}}"
+      },
+      "travelersTitle": "פרטי נוסעים",
+      "idNumber": "ת.ז: {{id}}",
+      "noTravelers": "אין נוסעים רשומים",
+      "updateButton": "עדכן פוליסה",
+      "updateButtonAria": "עדכון תאריכי פוליסה מספר {{number}}",
+      "cancelButton": "בטל פוליסה",
+      "cancelButtonAria": "ביטול פוליסה מספר {{number}}",
+      "documentsButton": "מסמכי הפוליסה ({{count}})",
+      "downloading": "מוריד...",
+      "announcements": {
+        "expanded": "פוליסה מספר {{number}} הורחבה",
+        "collapsed": "פוליסה מספר {{number}} נסגרה"
+      }
+    },
+    "policyCount": "{{count}} פוליסות",
+    "filterAriaLabel": "סינון פוליסות",
+    "sortLabel": "מיון לפי:",
+    "sortPlaceholder": "בחר מיון",
+    "filters": {
+      "all": "הכל",
+      "active": "פעילות",
+      "future": "עתידיות",
+      "expired": "לא פעילות"
+    },
+    "sort": {
+      "dateDesc": "תאריך התחלה - חדש לישן",
+      "dateAsc": "תאריך התחלה - ישן לחדש",
+      "destinationAsc": "יעד - א-ת"
+    },
+    "cancel": {
+      "title": "ביטול פוליסה",
+      "steps": {
+        "selectTravelers": "בחירת מטיילים",
+        "reason": "סיבת ביטול",
+        "summary": "סיכום ואישור"
+      },
+      "exitDialog": {
+        "title": "האם אתה בטוח שברצונך לבטל?",
+        "message": "כל המידע שהזנת יאבד.",
+        "continueButton": "המשך",
+        "confirmButton": "כן, בטל"
+      },
+      "step1": {
+        "title": "בחירת נוסעים",
+        "description": "עבור אילו מבוטחים ברצונך לבטל את הפוליסה?",
+        "errors": {
+          "noTravelerSelected": "חובה לבחור לפחות מבוטח אחד",
+          "loadingFailed": "שגיאה בטעינת הפוליסה"
+        }
+      },
+      "step2": {
+        "description": "מדוע אתה מבטל את הפוליסה?",
+        "otherReasonLabel": "פרט את סיבת הביטול:",
+        "otherReasonPlaceholder": "הכנס את סיבת הביטול",
+        "errors": {
+          "reasonRequired": "חובה לבחור סיבת ביטול ולמלא פרטים אם נבחר \"אחר\""
+        }
+      },
+      "step3": {
+        "calculatingRefund": "מחשב סכום זיכוי...",
+        "title": "סיכום ואישור ביטול",
+        "description": "אנא קרא בעיון לפני אישור הביטול",
+        "summaryTitle": "סיכום הביטול",
+        "refundAmount": "סכום זיכוי",
+        "creditCard": "כרטיס אשראי:",
+        "disclaimerTitle": "שים לב:",
+        "disclaimerText": "ניתן לבטל פוליסה זו רק אם אין לך עילת תביעה כלשהיא על פי הפוליסה. אין אפשרות להגיש תביעה ולקבל תגמולי ביטוח מכוח פוליסה שבוטלה.",
+        "confirmCheckbox": "הנני מאשר/ת את ביטול הפוליסה",
+        "submitButton": "אישור ביטול",
+        "confirmModal": {
+          "title": "האם אתה בטוח שברצונך לבטל את הפוליסה?",
+          "no": "לא"
+        }
+      },
+      "reasons": {
+        "tripCancelled": "הנסיעה בוטלה",
+        "someTravelersCancelled": "חלק מהנוסעים ביטלו את הנסיעה",
+        "foundCheaper": "מצאתי פוליסה זולה יותר",
+        "other": "אחר"
+      },
+      "success": {
+        "title": "הפוליסה בוטלה בהצלחה!",
+        "refundMessage": "זיכוי יתבצע תוך 7-14 ימי עסקים",
+        "backButton": "חזרה לרשימת הפוליסות"
+      }
+    },
+    "update": {
+      "title": "עדכון פוליסה",
+      "steps": {
+        "selectPolicy": "בחירת פוליסה",
+        "updateDetails": "עדכון פרטים",
+        "confirmAndPay": "אישור ותשלום",
+        "summary": "סיכום"
+      },
+      "errors": {
+        "notUpdatable": "לא ניתן לערוך פוליסה זו",
+        "notUpdatableDescription": "הפוליסה אינה עומדת בתנאים לעריכה. נא לפנות לשירות לקוחות."
+      },
+      "options": {
+        "destinations": "שינוי יעדים",
+        "dates": "שינוי תאריכים",
+        "extensions": "הוספת/הסרת הרחבות"
+      },
+      "step1": {
+        "loadingAriaLabel": "טוען פרטי פוליסה",
+        "loadingText": "טוען פרטי פוליסה...",
+        "errorTitle": "אירעה שגיאה בטעינת פרטי הפוליסה",
+        "errorMessage": "אנא נסה שנית או חזור לרשימת הפוליסות",
+        "backToPolicies": "חזור לפוליסות",
+        "title": "בחירת אפשרויות עדכון",
+        "description": "בחר את השדות שברצונך לעדכן",
+        "sectionTitle": "מה ברצונך לעדכן?",
+        "optionsLegend": "אפשרויות עדכון",
+        "validationError": "בחר לפחות אפשרות אחת להמשך",
+        "continueAriaLabel": "המשך לשלב הבא"
+      },
+      "step2": {
+        "loadingPolicy": "טוען נתוני פוליסה...",
+        "title": "עדכון פרטי הפוליסה",
+        "backButton": "← חזור",
+        "continueButton": "המשך →",
+        "errors": {
+          "datesRequired": "יש למלא תאריכי התחלה וסיום",
+          "invalidDates": "תאריכים לא תקינים",
+          "destinationRequired": "יש לבחור לפחות יעד אחד"
+        },
+        "destinations": {
+          "title": "יעדי הנסיעה",
+          "current": "יעדים נוכחיים:",
+          "searchPlaceholder": "חפש מדינה...",
+          "searchAriaLabel": "חיפוש מדינה",
+          "popular": "יעדים פופולריים:",
+          "loadingCountries": "טוען מדינות...",
+          "selectedCount": "נבחרו {{count}} יעדים"
+        },
+        "dates": {
+          "title": "תאריכי הנסיעה",
+          "current": "תאריכים נוכחיים:",
+          "startLabel": "תאריך התחלה:",
+          "startAriaLabel": "תאריך התחלה",
+          "endLabel": "תאריך סיום:",
+          "endAriaLabel": "תאריך סיום"
+        }
+      },
+      "step3": {
+        "loading": "טוען הרחבות...",
+        "title": "רשימת ההרחבות בפוליסה",
+        "empty": "אין הרחבות בפוליסה זו",
+        "customerLabel": "לקוח {{id}}",
+        "periodicBadge": "תקופתי",
+        "updatedBadge": "עודכן",
+        "updateDatesButton": "עדכן תאריכים",
+        "backButton": "← חזור",
+        "continueButton": "המשך →",
+        "dateModal": {
+          "title": "עדכון תאריכים - {{name}}",
+          "startDateLabel": "תאריך התחלה",
+          "endDateLabel": "תאריך סיום",
+          "saveButton": "שמור",
+          "cancelButton": "ביטול"
+        }
+      },
+      "step4": {
+        "loading": "טוען...",
+        "validationErrorTitle": "שגיאה באימות",
+        "validationErrorAlert": "שגיאה באימות:",
+        "updateErrorAlert": "שגיאה בעדכון:",
+        "title": "סיכום ואישור",
+        "backButton": "← חזור",
+        "submitButton": "אישור ועדכון",
+        "submitting": "מעדכן...",
+        "proposedChanges": "שינויים מוצעים:",
+        "destinations": {
+          "label": "יעדים:",
+          "current": "נוכחי:",
+          "new": "חדש:"
+        },
+        "dates": {
+          "label": "תאריכים:",
+          "current": "נוכחי:",
+          "new": "חדש:"
+        },
+        "extensions": {
+          "label": "הרחבות - עדכוני תאריכים:",
+          "extensionLabel": "הרחבה {{id}}",
+          "originalDate": "תאריך מקורי:",
+          "newDate": "תאריך חדש:"
+        },
+        "cost": {
+          "title": "עלות:",
+          "originalPrice": "מחיר מקורי:",
+          "newPrice": "מחיר חדש:",
+          "difference": "הפרש:",
+          "chargeType": "סוג חיוב:"
+        },
+        "chargeTypes": {
+          "Debit": "חיוב",
+          "Credit": "זיכוי",
+          "NoChange": "ללא שינוי"
+        },
+        "errors": {
+          "StartDatePolicyActive": "לא ניתן לשנות תאריך התחלה של פוליסה פעילה",
+          "StartDateRetro": "תאריך התחלה לא יכול להיות בעבר",
+          "EndDateBeforeStartDate": "תאריך סיום חייב להיות אחרי תאריך התחלה",
+          "EndDateExeded": "תאריך הסיום חורג מהמגבלות",
+          "ErrorPrices": "שגיאה בחישוב מחירים",
+          "HaveClaim": "לא ניתן לעדכן פוליסה עם תביעות",
+          "IsSpec": "לא ניתן לעדכן פוליסה מיוחדת",
+          "IsCompanyPolicy": "לא ניתן לעדכן פוליסת חברה",
+          "ErrorUpdatePeriodicRiderDates": "שגיאה בעדכון תאריכי הרחבות",
+          "AgeChangeInPolicyStartDate": "שינוי גיל בתאריך התחלת הפוליסה",
+          "AgeTravelDaysRestrictions": "הגבלות גיל וימי נסיעה",
+          "CODNotValid": "COD לא תקף",
+          "PolicyDatesAreNotTheSameForAllMembers": "תאריכי הפוליסה אינם זהים לכל המבוטחים",
+          "ERROR": "שגיאה כללית בעדכון הפוליסה",
+          "default": "שגיאה בעדכון הפוליסה"
+        }
+      },
+      "success": {
+        "title": "הפוליסה עודכנה בהצלחה!",
+        "message": "השינויים נכנסו לתוקף מיידית",
+        "backButton": "חזרה לרשימת הפוליסות"
+      },
+      "summary": {
+        "title": "פרטי הפוליסה:",
+        "policyNumber": "מספר פוליסה:",
+        "destinations": "יעדים:",
+        "dates": "תאריכים:",
+        "duration": "משך הטיול:",
+        "durationDays": "{{count}} ימים",
+        "travelers": "נוסעים:",
+        "extensions": "הרחבות:",
+        "notSpecified": "לא צוין"
+      }
+    }
+  },
+  "cards": {
+    "pageTitle": "הכרטיסים שלי",
+    "noFilterResults": "אין כרטיסים תואמים לסינון",
+    "filterAnnouncement": "מציג {{count}} {{filter}}",
+    "filterLabels": {
+      "all": "כל הכרטיסים",
+      "active": "כרטיסים פעילים",
+      "inactive": "כרטיסים לא פעילים",
+      "loaded": "כרטיסים טעונים",
+      "not-loaded": "כרטיסים לא טעונים"
+    },
+    "filterTabs": {
+      "all": "הכל",
+      "active": "פעילים",
+      "inactive": "לא פעילים",
+      "loaded": "טעונים",
+      "notLoaded": "לא טעונים"
+    },
+    "refundLabel": "זיכוי:",
+    "gallery": {
+      "ariaLabel": "גלריית כרטיסים",
+      "scrollHint": "גלול לעוד כרטיסים"
+    },
+    "filter": {
+      "ariaLabel": "סינון כרטיסים"
+    },
+    "loadedStatus": {
+      "loaded": "טעון",
+      "notLoaded": "לא טעון"
+    },
+    "cardStatus": {
+      "cancelled": "בוטל"
+    },
+    "details": {
+      "title": "פרטי כרטיס",
+      "closeAria": "סגור פרטי כרטיס",
+      "cardNumber": "מספר כרטיס:",
+      "status": "סטטוס:",
+      "loadStatus": "סטטוס טעינה:",
+      "expiry": "תוקף:",
+      "cardType": "סוג כרטיס:",
+      "loadCardAria": "הטען כרטיס מספר {{lastDigits}}",
+      "loadCardButton": "הטען כרטיס",
+      "reportCardAria": "דווח על אובדן או גניבה של כרטיס מספר {{lastDigits}}",
+      "reportCardButton": "דווח על אובדן/גניבה"
+    },
+    "creditCard": {
+      "ariaLabel": "פספורטקארד מספר {{lastDigits}}, סטטוס: {{status}}, {{loadStatus}}. {{clickHint}}",
+      "clickToShowDetails": "לחץ להצגת פרטים"
+    },
+    "report": {
+      "title": "דיווח על כרטיס",
+      "cardNumber": "כרטיס מספר {{lastDigits}}",
+      "warningText": "הכרטיס ייחסם באופן מיידי ולא ניתן לבטל את הפעולה",
+      "selectReason": "בחר סיבת ביטול:",
+      "reasonLost": "כרטיס אבד",
+      "reasonStolen": "כרטיס נגנב",
+      "validationError": "נא לבחור סיבת ביטול",
+      "confirmationText": "האם אתה בטוח שברצונך לדווח על הכרטיס?",
+      "confirmButton": "אשר ודווח"
+    },
+    "empty": {
+      "ariaLabel": "אין כרטיסים",
+      "title": "אין לך כרטיסים כרגע",
+      "description": "כרטיסים פעילים יופיעו כאן"
+    },
+    "error": {
+      "networkError": "שגיאת רשת. אנא נסה שנית",
+      "loadingError": "שגיאה בטעינת הכרטיסים",
+      "tryAgainMessage": "אנא נסה שנית",
+      "retryButton": "נסה שנית"
+    },
+    "load": {
+      "title": "טעינת כרטיס",
+      "checkingEligibility": "בודק זכאות...",
+      "loadingData": "טוען נתונים...",
+      "errorTitle": "שגיאה",
+      "eligibilityError": "נתקלנו בבעיה, יש צורך ליצור קשר עם שירות הלקוחות",
+      "dataLoadError": "שגיאה בטעינת הנתונים",
+      "backToCards": "חזור לכרטיסים שלי",
+      "eligibilityErrorScreen": {
+        "title": "לא ניתן לבצע טעינת כרטיס",
+        "contactTitle": "צור קשר עם שירות הלקוחות",
+        "contactSubtitle": "נציגינו ישמחו לסייע לך",
+        "whatsappAriaLabel": "פתח WhatsApp",
+        "phoneAriaLabel": "התקשר לשירות לקוחות",
+        "hoursTitle": "שעות פעילות:",
+        "hoursWeekdays": "ימים א'-ה': 08:00-20:00",
+        "hoursFriday": "יום ו': 08:00-14:00",
+        "whatsappMessage": "שלום, ניסיתי לטעון כרטיס ונתקלתי בבעיה. אשמח לקבל עזרה."
+      },
+      "exitDialog": {
+        "title": "האם אתה בטוח שברצונך לבטל?",
+        "message": "כל המידע שהזנת יאבד.",
+        "continueButton": "המשך",
+        "confirmButton": "כן, בטל"
+      },
+      "steps": {
+        "medical": {
+          "claimType": "סוג תביעה",
+          "selectTravelers": "בחירת נוסעים",
+          "currentLocation": "מיקום נוכחי",
+          "incidentDescription": "תיאור המקרה",
+          "treatmentType": "סוג הטיפול",
+          "guaranteeConfirm": "ערבון ואישור"
+        },
+        "baggage": {
+          "claimType": "סוג תביעה",
+          "selectTravelers": "בחירת נוסעים",
+          "currentLocation": "מיקום נוכחי",
+          "uploadDocuments": "העלאת מסמכים",
+          "guaranteeConfirm": "ערבון ואישור"
+        }
+      },
+      "step1": {
+        "description": "באיזה סוג טיפול אתם זקוקים?",
+        "medicalCase": {
+          "ariaLabel": "מקרה רפואי",
+          "title": "מקרה רפואי",
+          "description": "לטיפול רפואי דחוף במהלך הנסיעה"
+        },
+        "baggageDelay": {
+          "ariaLabel": "עיכוב כבודה",
+          "title": "עיכוב כבודה",
+          "description": "לרכישת פריטי חירום בעקבות עיכוב כבודה"
+        },
+        "validationError": "נא לבחור סוג תביעה",
+        "continueAriaLabel": "המשך לשלב הבא",
+        "continueButton": "המשך"
+      },
+      "step2Travelers": {
+        "title": "למי נטען את הכרטיס?",
+        "description": "ניתן לבחור מספר נוסעים",
+        "validationError": "נא לבחור לפחות נוסע אחד",
+        "backAriaLabel": "חזור לשלב הקודם",
+        "backButton": "← חזור",
+        "continueAriaLabel": "המשך לשלב הבא",
+        "continueButton": "המשך ←"
+      },
+      "step2Baggage": {
+        "title": "פרטי העיכוב",
+        "description": "נא למלא את פרטי העיכוב והטיסה",
+        "flightDate": {
+          "label": "תאריך הטיסה",
+          "placeholder": "בחר תאריך",
+          "errorRequired": "נא לבחור תאריך טיסה",
+          "errorFuture": "התאריך לא יכול להיות בעתיד",
+          "errorPast": "התאריך חייב להיות בתוך 60 יום האחרונים"
+        },
+        "flightNumber": {
+          "label": "מספר טיסה",
+          "placeholder": "דוגמה: LY318",
+          "errorRequired": "נא להזין מספר טיסה",
+          "errorInvalid": "מספר טיסה לא תקין"
+        },
+        "airline": {
+          "label": "שם חברת התעופה",
+          "placeholder": "בחר חברת תעופה",
+          "otherPlaceholder": "הזן שם חברת תעופה",
+          "errorRequired": "נא לבחור חברת תעופה",
+          "other": "אחר"
+        },
+        "delayDuration": {
+          "label": "משך העיכוב (בשעות)",
+          "placeholder": "מספר שעות (1-72)",
+          "errorRequired": "נא להזין משך עיכוב",
+          "errorRange": "משך העיכוב חייב להיות בין 1 ל-72 שעות"
+        },
+        "country": {
+          "label": "באיזו מדינה אתם נמצאים?",
+          "placeholder": "בחר מדינה",
+          "errorRequired": "נא לבחור מדינה"
+        },
+        "city": {
+          "label": "באיזו עיר אתם נמצאים?",
+          "placeholder": "הזן שם עיר",
+          "errorRequired": "נא להזין שם עיר",
+          "errorMinLength": "שם העיר חייב להכיל לפחות 2 תווים"
+        },
+        "baggageTag": {
+          "label": "מספר תג כבודה",
+          "placeholder": "דוגמה: 0123456789",
+          "errorRequired": "נא להזין מספר תג כבודה",
+          "errorInvalid": "מספר תג לא תקין (6-12 תווים)"
+        },
+        "needsDescription": {
+          "label": "תיאור הצורך",
+          "placeholder": "נא לתאר מה אתם צריכים לרכוש (ביגוד, תרופות, וכו')...",
+          "errorRequired": "נא לכתוב תיאור של הצורך",
+          "errorMinLength": "נא לכתוב תיאור של לפחות 20 תווים",
+          "errorMaxLength": "תיאור ארוך מדי. מקסימום 500 תווים"
+        },
+        "characterCount": "{{count}}/500 תווים",
+        "backButton": "← חזור",
+        "continueButton": "המשך ←"
+      },
+      "success": {
+        "ariaLabel": "הצלחה",
+        "title": "הכרטיס נטען בהצלחה!",
+        "pinError": "שגיאה בקבלת קוד PIN. נסה שוב או פנה לשירות לקוחות.",
+        "showPinButton": "הצג קוד סודי",
+        "pinTitle": "קוד PIN לשימוש:",
+        "pinWarning": "שמור קוד זה! לא ניתן לשחזרו",
+        "copyPinAriaLabel": "העתק קוד PIN",
+        "copyButton": "העתק",
+        "pinCopied": "קוד PIN הועתק",
+        "instructionsTitle": "כיצד להשתמש בכרטיס:",
+        "instruction1": "שמור את קוד ה-PIN במקום בטוח",
+        "instruction2": "השתמש בכרטיס בכל עסק המקבל כרטיסי Visa/MasterCard",
+        "instruction3": "הזן את קוד ה-PIN בעת התשלום",
+        "returnButton": "חזור לכרטיסים",
+        "returnAriaLabel": "חזור לכרטיסים"
+      },
+      "failure": {
+        "title": "לא הצלחנו לטעון את הכרטיס",
+        "referenceLabel": "מספר פניה:",
+        "contactTitle": "צור קשר עם שירות הלקוחות",
+        "contactSubtitle": "נציגינו ישמחו לסייע לך בהשלמת התהליך",
+        "whatsappAriaLabel": "פתח WhatsApp",
+        "phoneAriaLabel": "התקשר לשירות לקוחות",
+        "hoursTitle": "שעות פעילות:",
+        "hoursWeekdays": "ימים א'-ה': 08:00-20:00",
+        "hoursFriday": "יום ו': 08:00-14:00",
+        "returnButton": "חזור לכרטיסים",
+        "whatsappMessage": "שלום, פניתי לטעון כרטיס ונתקלתי בבעיה. מספר פניה: {{reference}}"
+      },
+      "step3Location": {
+        "title": "באיזו מדינה אתם נמצאים?",
+        "description": "נא לבחור את מיקומך הנוכחי",
+        "policyCountries": "מדינות המשויכות לפוליסה:",
+        "otherCountries": "מדינות אחרות:",
+        "searchPlaceholder": "חפש מדינה...",
+        "searchAriaLabel": "חיפוש מדינה",
+        "noResults": "לא נמצאו מדינות",
+        "backAriaLabel": "חזור לשלב הקודם",
+        "backButton": "← חזור",
+        "continueAriaLabel": "המשך לשלב הבא",
+        "continueButton": "המשך ←",
+        "errors": {
+          "countryRequired": "נא לבחור מדינה",
+          "noCountries": "לא נמצאו מדינות זמינות",
+          "rawCountriesInfo": "נתונים זמינים: {{rawCount}} מדינות גולמי, {{validCount}} מדינות תקינות"
+        }
+      },
+      "step3Documents": {
+        "title": "העלאת מסמכים",
+        "description": "נא להעלות את המסמך הנדרש",
+        "pirFormTitle": "טופס אי קבלת הכבודה משדה התעופה/חברת התעופה",
+        "pirFormDescription": "טופס PIR שהונפק בשדה התעופה המעיד על אי קבלת הכבודה",
+        "backButton": "← חזור",
+        "continueButton": "המשך ←",
+        "errors": {
+          "documentRequired": "נדרש להעלות את טופס אי קבלת הכבודה",
+          "fileErrors": "יש לתקן שגיאות בקובץ"
+        },
+        "upload": {
+          "addFiles": "העלה טופס",
+          "dragAndDrop": "גרור ושחרר קובץ כאן",
+          "supportedTypes": "PDF, JPG, PNG (עד 12MB)",
+          "errorFileType": "סוג קובץ לא נתמך. השתמש ב-PDF, JPG, או PNG",
+          "errorFileSize": "הקובץ גדול מדי. מקסימום 12MB"
+        }
+      },
+      "step4Incident": {
+        "title": "תיאור המקרה",
+        "description": "מה המצב הרפואי?",
+        "categoryLabel": "סוג המקרה:",
+        "categoryPlaceholder": "בחר סוג מקרה...",
+        "loading": "טוען סוגי מקרה...",
+        "backAriaLabel": "חזור לשלב הקודם",
+        "backButton": "← חזור",
+        "continueAriaLabel": "המשך לשלב הבא",
+        "continueButton": "המשך ←",
+        "errors": {
+          "categoryRequired": "נא לבחור סוג מקרה",
+          "loadingFailed": "שגיאה בטעינת סוגי מקרה"
+        }
+      },
+      "step4Summary": {
+        "title": "סיכום ואישור",
+        "description": "אנא ודאו שכל הפרטים נכונים",
+        "delayDetailsTitle": "פרטי העיכוב",
+        "typeLabel": "סוג:",
+        "typeValue": "עיכוב כבודה",
+        "flightLabel": "טיסה:",
+        "dateLabel": "תאריך:",
+        "delayDurationLabel": "משך עיכוב:",
+        "hoursUnit": "שעות",
+        "currentLocationLabel": "מיקום נוכחי:",
+        "tagNumberLabel": "מספר תג:",
+        "descriptionLabel": "תיאור:",
+        "documentsTitle": "מסמכים שהועלו",
+        "noDocuments": "אין מסמכים",
+        "totalFilesLabel": "סה\"כ:",
+        "filesUnit": "קבצים",
+        "amountTitle": "סכום לטעינה",
+        "amountValue": "עד ₪1,500",
+        "amountNote": "לפי תנאי הפוליסה",
+        "amountDisclaimer": "* הסכום הסופי יקבע על פי אישור החברה",
+        "nextStepInfo": "בשלב הבא תתבקשו לספק כרטיס אשראי לערבון ולאשר את התנאים",
+        "editButton": "← ערוך פרטים",
+        "continueButton": "המשך לתשלום ←"
+      },
+      "step4Guarantee": {
+        "title": "כרטיס ערבון ותנאים",
+        "description": "לצורך אישור הטעינה, נדרש כרטיס אשראי ערבות",
+        "termsTitle": "תנאים והגבלות",
+        "baggageTermsTitle": "תנאים לעיכוב כבודה:",
+        "terms": {
+          "creditCardGuarantee": "כרטיס האשראי משמש כערבון בלבד",
+          "noChargeUnlessRejected": "לא יחויב כרטיס האשראי אלא אם הטעינה לא תאושר",
+          "subjectToApproval": "הטעינה כפופה לאישור החברה",
+          "useForBaggageOnly": "יש להשתמש בכספים רק לצרכים הקשורים לעיכוב הכבודה",
+          "keepReceipts": "יש לשמור את כל הקבלות לבדיקה",
+          "mayRequestDocuments": "החברה שומרת את הזכות לבקש מסמכים נוספים"
+        },
+        "acceptTermsLabel": "אני מאשר/ת את התנאים",
+        "selectCardTitle": "בחירת כרטיס ערבון",
+        "attemptCount": "ניסיון {{current}} מתוך {{total}}",
+        "cardExpiry": "תוקף: {{month}}/{{year}}",
+        "addNewCard": "+ הוסף כרטיס חדש",
+        "creditCard": "כרטיס אשראי",
+        "backButton": "← חזור",
+        "submitButton": "אישור ושליחה ←",
+        "errors": {
+          "termsRequired": "יש לאשר את התנאים כדי להמשיך",
+          "cardRequired": "נא לבחור כרטיס ערבון",
+          "cardValidationError": "שגיאה באימות כרטיס. נסה שוב"
+        },
+        "failureModal": {
+          "title": "שגיאה באימות כרטיס",
+          "message1": "לא הצלחנו לאמת את הכרטיס לאחר 3 ניסיונות.",
+          "message2": "אנא צור/י קשר עם שירות הלקוחות לקבלת עזרה.",
+          "whatsappButton": "צור קשר ב-WhatsApp",
+          "closeButton": "סגור"
+        },
+        "whatsappMessage": "שלום, אני צריך/ה עזרה עם אישור כרטיס ערבון - טעינת כרטיס (עיכוב כבודה)"
+      },
+      "step5Treatment": {
+        "title": "סוג הטיפול",
+        "description": "איזה טיפול נדרש?",
+        "treatmentLabel": "סוג הטיפול:",
+        "treatmentPlaceholder": "בחר סוג טיפול...",
+        "descriptionLabel": "תיאור המקרה:",
+        "descriptionPlaceholder": "נא לתאר את המצב הרפואי בפירוט...",
+        "characterCount": "{{count}}/{{max}} תווים",
+        "helpText": "מינימום {{min}} תווים, מקסימום {{max}} תווים",
+        "loading": "טוען סוגי טיפול...",
+        "backAriaLabel": "חזור לשלב הקודם",
+        "backButton": "← חזור",
+        "continueAriaLabel": "המשך לשלב הבא",
+        "continueButton": "המשך ←",
+        "errors": {
+          "treatmentRequired": "נא לבחור סוג טיפול",
+          "descriptionRequired": "נא לכתוב תיאור של המקרה",
+          "descriptionMinLength": "נא לכתוב תיאור של לפחות {{min}} תווים",
+          "descriptionMaxLength": "תיאור ארוך מדי. מקסימום {{max}} תווים",
+          "loadingFailed": "שגיאה בטעינת סוגי טיפול"
+        }
+      },
+      "step6Terms": {
+        "title": "הצהרה לשימוש בכרטיס ערבון",
+        "ariaLabel": "תנאי שימוש",
+        "scrollInstruction": "נא לגלול למטה כדי לקרוא את כל התנאים",
+        "acceptLabel": "אני מאשר את תנאי השימוש",
+        "termsText": "תנאי שימוש בכרטיס ערבון\n\n1. כללי\nאני מאשר/ת כי ידוע לי שהטעינה של הכרטיס מותנית במתן ערבון באמצעות כרטיס אשראי.\n\n2. ערבון\nהערבון יוחזק על ידי החברה למשך 30 ימים ממועד הטעינה, או עד לסגירת התביעה - המוקדם מביניהם.\n\n3. השבת כספים\nבמקרה של אי-שימוש בכרטיס, הכספים יושבו תוך 7 ימי עסקים.\n\n4. חיוב הערבון\nהחברה תהיה רשאית לחייב את כרטיס האשראי הערבון במקרה של:\n- שימוש בכרטיס שלא בהתאם למדיניות הפוליסה\n- אי-החזרת מסמכים נדרשים\n- מתן מידע כוזב או מטעה\n\n5. פרטיות ואבטחה\nפרטי כרטיס האשראי יישמרו בהתאם לתקני אבטחת מידע בינלאומיים (PCI-DSS).\nהחברה לא תשמור את מספר הכרטיס המלא או קוד האבטחה (CVV).\n\n6. ביטול והחזרה\nניתן לבטל את הטעינה תוך 24 שעות ממועד האישור, בכפוף לכך שלא נעשה שימוש בכרטיס.\n\n7. תוקף\nהסכם זה תקף למשך תקופת הטעינה בלבד.\n\n8. שיפוט וסמכות\nעל הסכם זה יחולו דיני מדינת ישראל בלבד.\nהסמכות הייחודית נתונה לבתי המשפט במחוז תל אביב.\n\n9. שינויים\nהחברה שומרת לעצמה את הזכות לשנות את התנאים בהתראה של 7 ימים.\n\n10. יצירת קשר\nלכל שאלה ניתן לפנות לשירות לקוחות בטלפון: 03-1234567 או בוואטסאפ.\n\n---\n\nאני מאשר/ת כי קראתי והבנתי את תנאי השימוש והנני מסכים/ה לכל האמור בהם.\n\nתאריך: {{date}}",
+        "whatsappMessage": "שלום, אני צריך/ה עזרה עם טעינת כרטיס - שלב אישור תנאי שימוש",
+        "contactWhatsapp": "צור קשר ב-WhatsApp",
+        "rejectionModal": {
+          "title": "לא ניתן להמשיך ללא אישור ההצהרה",
+          "message": "כדי להמשיך בתהליך, עליך לאשר את תנאי השימוש",
+          "acceptButton": "אשר את ההצהרה"
+        },
+        "finalRejection": {
+          "title": "התהליך הופסק",
+          "message1": "לא ניתן להמשיך ללא אישור ההצהרה.",
+          "message2": "אנא צור קשר עם שירות הלקוחות"
+        }
+      },
+      "step6Guarantee": {
+        "title": "בחירת כרטיס ערבון",
+        "addCardAriaLabel": "הוסף כרטיס ערבון חדש",
+        "addCardButton": "+ הוסף כרטיס ערבון חדש",
+        "selectExisting": "או בחר מכרטיס קיים:",
+        "newBadge": "חדש",
+        "expiry": "תוקף",
+        "noCardsMessage": "לא נמצאו כרטיסי ערבון. הוסף כרטיס חדש כדי להמשיך.",
+        "newCardLabel": "כרטיס חדש",
+        "creditCard": "כרטיס אשראי",
+        "errors": {
+          "cardRequired": "נא לבחור כרטיס ערבון",
+          "loadFormError": "שגיאה בטעינת טופס הוספת כרטיס",
+          "loadFormErrorRetry": "שגיאה בטעינת טופס הוספת כרטיס. נסה שוב."
+        }
+      },
+      "step6Summary": {
+        "title": "סיכום ואישור",
+        "description": "אנא ודאו שכל הפרטים נכונים",
+        "sectionTitle": "📋 פרטי הטעינה",
+        "typeLabel": "סוג:",
+        "medicalCase": "מקרה רפואי",
+        "travelersLabel": "👥 נוסעים:",
+        "countryLabel": "📍 מדינה:",
+        "incidentLabel": "🏥 מקרה:",
+        "treatmentLabel": "💉 טיפול:",
+        "descriptionLabel": "📝 תיאור:",
+        "guaranteeCardLabel": "💳 כרטיס ערבון:",
+        "confirmCheckbox": "אני מאשר את כל הפרטים ומסכים לתנאים",
+        "backButton": "← חזרה",
+        "submitAriaLabel": "אישור ושליחה",
+        "submitting": "שולח...",
+        "submitButton": "✓ אישור ושליחה",
+        "errors": {
+          "confirmRequired": "נא לאשר את הפרטים לפני שליחה",
+          "claimTypeMissing": "סוג תביעה חסר",
+          "loadError": "שגיאה בטעינת הכרטיס"
+        }
+      },
+      "creditGuard": {
+        "dialogTitle": "הוספת כרטיס ערבון",
+        "loadingForm": "טוען טופס...",
+        "formLoadError": "שגיאה בטעינת טופס התשלום.",
+        "tryAgainOrContact": "נא לנסות שוב או לפנות לתמיכה.",
+        "errors": {
+          "cardDataError": "שגיאה בקבלת נתוני כרטיס",
+          "validationError": "שגיאה באימות כרטיס",
+          "cardDeclined": "כרטיס נדחה",
+          "processingError": "שגיאה בעיבוד תגובה",
+          "timeout": "זמן האימות פג. נסה שוב",
+          "networkError": "אין חיבור למערכת התשלומים. נסה שוב"
+        }
+      }
+    }
+  },
+  "claims": {
+    "defaults": {
+      "insured": "מבוטח",
+      "missingDocuments": "חסרים מסמכים",
+      "item": "פריט",
+      "document": "מסמך",
+      "companyRep": "נציג החברה",
+      "customer": "לקוח"
+    },
+    "statusApi": {
+      "closed": "סגורה",
+      "inProgress": "בטיפול",
+      "waitingForInfo": "ממתין למידע",
+      "rejected": "נדחתה",
+      "approved": "אושרה",
+      "new": "חדשה"
+    },
+    "pageTitle": "התביעות שלי - PassportCard אזור אישי",
+    "ariaLabel": "עמוד התביעות שלי",
+    "title": "התביעות שלי",
+    "loading": "טוען תביעות...",
+    "announcement": "עמוד התביעות שלי, {{count}} תביעות נמצאו",
+    "card": {
+      "ariaLabel": "תביעה מספר {{number}}, סטטוס: {{status}}",
+      "defaultCustomer": "לקוח",
+      "incidentDate": "מועד האירוע:",
+      "type": "סוג:",
+      "claimNumber": "מספר תביעה:",
+      "submittedDate": "תאריך הגשה:",
+      "policyNumber": "מספר פוליסה:",
+      "financialSummary": "סיכום כספי:",
+      "requestedAmount": "סכום מבוקש:",
+      "paidAmount": "סכום ששולם:",
+      "hideDetailsAria": "הסתר פרטים לתביעה {{number}}",
+      "showDetailsAria": "הצג פרטים לתביעה {{number}}",
+      "hideDetails": "הסתר פרטים ▲",
+      "showDetails": "הצג פרטים ▼",
+      "uploadDocsAria": "העלה מסמכים נוספים לתביעה {{number}}",
+      "additionalDocs": "מסמכים נוספים",
+      "viewNotesAria": "צפה בהערות ללקוח לתביעה {{number}}",
+      "customerNotes": "הערות ללקוח",
+      "loadingDetails": "טוען פרטים...",
+      "detailsError": "שגיאה בטעינת פרטי התביעה: {{message}}",
+      "bankTransfer": "העברה בנקאית"
+    },
+    "skeleton": {
+      "loadingClaim": "טוען תביעה..."
+    },
+    "filter": {
+      "ariaLabel": "סינון תביעות",
+      "all": "הכל",
+      "open": "פתוחות",
+      "completed": "הסתיימו"
+    },
+    "details": {
+      "caseDescriptionTitle": "תיאור המקרה:",
+      "destination": "יעד:",
+      "issueType": "סוג הבעיה:",
+      "customerName": "שם לקוח:",
+      "description": "תיאור:",
+      "claimItemsTitle": "פריטי תביעה:",
+      "receiptAttached": "קבלה מצורפת"
+    },
+    "notesModal": {
+      "title": "הערות ללקוח",
+      "closeAriaLabel": "סגור הערות ללקוח",
+      "forClaimNumber": "עבור תביעה מספר:",
+      "name": "שם:",
+      "messagesTitle": "הודעות מהחברה",
+      "companyAuthor": "החברה",
+      "noMessages": "אין הודעות",
+      "closeButton": "סגור"
+    },
+    "documents": {
+      "ariaLabel": "מסמכים שהועלו",
+      "title": "מסמכים שהועלו:",
+      "noDocuments": "לא הועלו מסמכים",
+      "downloadFileAria": "הורד קובץ {{fileName}}",
+      "downloading": "מוריד...",
+      "uploadedOn": "הועלה:"
+    },
+    "payment": {
+      "ariaLabel": "פרטי תשלום לתביעה {{claimNumber}}",
+      "title": "פרטי תשלום:",
+      "requestedAmount": "סכום מבוקש:",
+      "paidAmount": "סכום ששולם:",
+      "reducedAmount": "סכום שירד:",
+      "paymentDate": "תאריך תשלום:",
+      "balance": "יתרה:",
+      "expectedPaymentDate": "תאריך תשלום צפוי:",
+      "paymentMethod": "אמצעי תשלום:"
+    },
+    "status": {
+      "ariaLabel": "סטטוס תביעה: {{status}}",
+      "inProgress": "בטיפול",
+      "waitingForInfo": "ממתין למידע",
+      "completed": "הסתיימה"
+    },
+    "empty": {
+      "title": "אין תביעות להצגה",
+      "subtitle": "לא הגשת תביעות עדיין, או שאין תביעות עבור הפוליסה שנבחרה",
+      "submitClaimAria": "הגש תביעה חדשה",
+      "submitClaimButton": "הגש תביעה חדשה"
+    },
+    "error": {
+      "title": "שגיאה בטעינת התביעות",
+      "subtitle": "אנא נסה שנית",
+      "retryAria": "נסה שוב לטעון תביעות",
+      "retryButton": "נסה שנית",
+      "contactAria": "צור קשר עם שירות לקוחות",
+      "contactButton": "צור קשר"
+    },
+    "postPaid": {
+      "wizardTitle": "הגשת תביעה - דמי טיפול",
+      "steps": {
+        "policyAndType": "בחירת פוליסה וסוג תביעה",
+        "claimDetails": "פרטי תביעה",
+        "documentUpload": "העלאת מסמכים",
+        "bankDetails": "פרטי בנק",
+        "confirmation": "אישור",
+        "summary": "סיכום"
+      },
+      "exitDialog": {
+        "title": "האם אתה בטוח שברצונך לבטל?",
+        "message": "כל המידע שהזנת יאבד.",
+        "continueButton": "המשך",
+        "confirmButton": "כן, בטל"
+      },
+      "step1": {
+        "selectClaimType": "בחר סוג תביעה",
+        "required": "*",
+        "loading": "טוען סוגי תביעות...",
+        "loadError": "שגיאה בטעינת סוגי התביעות. נא לנסות שוב.",
+        "validationError": "נא לבחור סוג תביעה",
+        "continueAria": "המשך לשלב הבא",
+        "continueButton": "המשך"
+      },
+      "step2": {
+        "title": "פרטי האירוע",
+        "description": "מתי ואיפה זה קרה?",
+        "loading": "טוען נתונים...",
+        "fields": {
+          "subcategory": {
+            "label": "סוג המקרה",
+            "placeholder": "בחר סוג מקרה",
+            "ariaLabel": "בחר סוג מקרה"
+          },
+          "eventDate": {
+            "label": "מתי זה קרה?",
+            "placeholder": "בחר תאריך",
+            "ariaLabel": "בחר תאריך האירוע"
+          },
+          "country": {
+            "label": "באיזו מדינה?",
+            "placeholder": "בחר מדינה",
+            "ariaLabel": "בחר מדינה"
+          },
+          "travelers": {
+            "label": "למי זה קרה?",
+            "loading": "טוען מבוטחים...",
+            "ariaLabelSingle": "בחר מבוטח",
+            "ariaLabelMultiple": "בחר מבוטחים"
+          },
+          "cancellationReason": {
+            "label": "סיבת המקרה",
+            "placeholder": "בחר סיבה",
+            "ariaLabel": "בחר סיבת המקרה"
+          },
+          "description": {
+            "label": "תיאור המקרה",
+            "placeholder": "נא לתאר את האירוע בפירוט...",
+            "ariaLabel": "תיאור המקרה",
+            "characters": "תווים"
+          }
+        },
+        "errors": {
+          "subcategoryRequired": "נא לבחור סוג מקרה",
+          "dateRequired": "נא לבחור תאריך",
+          "policyRequired": "נא לבחור מבוטח",
+          "countryRequired": "נא לבחור מדינה",
+          "travelerRequired": "נא לבחור לפחות מבוטח אחד",
+          "descriptionRequired": "נא לכתוב תיאור המקרה",
+          "descriptionMinLength": "נא לכתוב תיאור של לפחות 20 תווים",
+          "descriptionMaxLength": "התיאור חורג מהמקסימום (1000 תווים)",
+          "subcategoriesLoadError": "שגיאה בטעינת סוגי המקרים. נא לנסות שוב.",
+          "countriesLoadError": "שגיאה בטעינת רשימת המדינות. נא לנסות שוב.",
+          "policiesLoadError": "שגיאה בטעינת פוליסות ומבוטחים. נא לבחור תאריך אחר או לנסות שוב מאוחר יותר."
+        },
+        "warnings": {
+          "noTravelersForDate": "לא נמצאו מבוטחים לתאריך שנבחר. נא לבחור תאריך אחר."
+        },
+        "navigation": {
+          "back": "חזור",
+          "backAria": "חזור לשלב הקודם",
+          "continue": "המשך",
+          "continueAria": "המשך לשלב הבא"
+        }
+      },
+      "step3": {
+        "title": "העלאת מסמכים",
+        "description": "נא להעלות את המסמכים הנדרשים",
+        "errors": {
+          "mandatoryDocuments": "נא להעלות את כל המסמכים החובה המסומנים באדום",
+          "documentsLoadError": "שגיאה בטעינת רשימת המסמכים",
+          "tryAgain": "נא לנסות שוב"
+        },
+        "deleteDialog": {
+          "title": "מחיקת קובץ",
+          "confirmMessage": "האם אתה בטוח שברצונך למחוק את הקובץ",
+          "deleteButton": "מחק",
+          "cancelButton": "ביטול"
+        },
+        "navigation": {
+          "back": "חזור",
+          "backAria": "חזור לשלב הקודם",
+          "continue": "המשך",
+          "continueAria": "המשך לשלב הבא"
+        }
+      },
+      "step4": {
+        "title": "פרטי חשבון בנק",
+        "description": "לאן נעביר את הכסף?",
+        "closeAria": "סגור",
+        "fields": {
+          "bank": {
+            "label": "בנק:",
+            "placeholder": "בחר בנק"
+          },
+          "branch": {
+            "label": "סניף:",
+            "placeholder": "בחר סניף"
+          },
+          "accountNumber": {
+            "label": "מספר חשבון:",
+            "placeholder": "הזן מספר חשבון"
+          },
+          "accountHolderName": {
+            "label": "שם בעל החשבון:",
+            "placeholder": "הזן שם בעל החשבון"
+          },
+          "idNumber": {
+            "label": "תעודת זהות:",
+            "placeholder": "הזן תעודת זהות"
+          }
+        },
+        "errors": {
+          "bankRequired": "נא לבחור בנק",
+          "branchRequired": "נא לבחור סניף",
+          "accountNumberRequired": "נא להזין מספר חשבון",
+          "accountNumberInvalid": "נא להזין מספר חשבון תקין (6-12 ספרות)",
+          "nameMinLength": "שם חייב להכיל לפחות 2 תווים",
+          "nameTooLong": "שם ארוך מדי",
+          "nameHebrewOnly": "נא להזין שם תקין בעברית בלבד",
+          "idRequired": "נא להזין תעודת זהות",
+          "idFormat": "תעודת זהות חייבת להיות 9 ספרות",
+          "idInvalid": "תעודת זהות לא תקינה",
+          "banksLoadError": "שגיאה בטעינת נתוני בנקים. לא הצלחנו לטעון את רשימת הבנקים."
+        },
+        "navigation": {
+          "back": "חזור",
+          "continue": "המשך"
+        },
+        "exitDialog": {
+          "title": "האם לצאת מהתביעה?",
+          "message": "המידע שהזנת לא יישמר",
+          "cancelButton": "ביטול",
+          "exitButton": "יציאה"
+        }
+      },
+      "step5": {
+        "title": "סיכום ושליחה",
+        "description": "אנא ודאו שכל הפרטים נכונים",
+        "closeAria": "סגור",
+        "sections": {
+          "contact": {
+            "title": "📧 פרטי קשר",
+            "emailLabel": "אימייל:",
+            "phoneLabel": "טלפון:"
+          },
+          "summary": {
+            "title": "סיכום התביעה",
+            "claimTypeTitle": "סוג תביעה",
+            "editButton": "✏️ ערוך",
+            "editClaimTypeAria": "ערוך סוג תביעה",
+            "eventDetailsTitle": "פרטי האירוע",
+            "editEventAria": "ערוך פרטי אירוע",
+            "dateLabel": "תאריך:",
+            "countryLabel": "מדינה:",
+            "descriptionLabel": "תיאור:",
+            "documentsTitle": "מסמכים",
+            "editDocumentsAria": "ערוך מסמכים",
+            "filesUploaded": "קבצים הועלו",
+            "bankDetailsTitle": "פרטי בנק",
+            "editBankAria": "ערוך פרטי בנק",
+            "bankSummary": "בנק {{bankName}} - סניף {{branchCode}} - חשבון ****{{lastDigits}}",
+            "accountHolder": "בעל החשבון:"
+          },
+          "additionalOptions": {
+            "title": "אפשרויות נוספות",
+            "agentNotification": "יידע את הסוכן על התביעה (אופציונלי)",
+            "powerOfAttorney": "מינוי מיופה כוח (אופציונלי)",
+            "powerOfAttorneyEmailLabel": "אימייל מיופה כוח:",
+            "powerOfAttorneyEmailPlaceholder": "הזן כתובת אימייל"
+          }
+        },
+        "errors": {
+          "emailRequired": "נא להזין כתובת אימייל",
+          "emailInvalid": "נא להזין כתובת אימייל תקינה",
+          "emailSameAsUser": "לא ניתן להזין את כתובת האימייל שלך",
+          "missingData": "חסרים נתונים נדרשים. אנא בדוק את כל השלבים.",
+          "claimDataMissing": "חסרים נתונים מהשלבים הקודמים. אנא התחל מחדש.",
+          "submitError": "שגיאה בשליחת התביעה. נא לנסות שוב.",
+          "errorTitle": "שגיאה"
+        },
+        "navigation": {
+          "back": "חזור",
+          "submitButton": "אישור ושליחה",
+          "submitting": "שולח תביעה...",
+          "submitAria": "אישור ושליחת התביעה",
+          "submittingAria": "שולח תביעה, אנא המתן",
+          "startOver": "התחל מחדש"
+        },
+        "exitDialog": {
+          "title": "האם לצאת מהתביעה?",
+          "message": "המידע שהזנת לא יישמר",
+          "cancelButton": "ביטול",
+          "exitButton": "יציאה"
+        }
+      },
+      "step6": {
+        "title": "התביעה נשלחה בהצלחה!",
+        "successIconAria": "סמל הצלחה",
+        "announcement": "התביעה נשלחה בהצלחה. מספר תביעה: {{claimId}}",
+        "claimIdLabel": "מספר תביעה:",
+        "submissionDateLabel": "תאריך הגשה:",
+        "processingTimeLabel": "זמן טיפול משוער:",
+        "processingTimeValue": "7-14 ימי עסקים",
+        "emailNotice": "אישור התביעה נשלח לכתובת האימייל שלך",
+        "nextStepsText": "התביעה שלך בבדיקה. נעדכן אותך על התקדמות הטיפול באימייל ובמערכת.",
+        "actionsAriaLabel": "פעולות",
+        "viewClaimButton": "צפה בתביעה",
+        "viewClaimAria": "צפה בתביעה מספר {{claimId}}",
+        "submitAnotherButton": "הגש תביעה נוספת",
+        "submitAnotherAria": "הגש תביעה נוספת",
+        "backToHomeButton": "חזור לדף הבית",
+        "backToHomeAria": "חזור לדף הבית"
+      },
+      "upload": {
+        "zone": {
+          "dropAreaAria": "גרור ושחרר קבצים כאן או לחץ כדי לבחור",
+          "releaseHere": "שחרר כאן",
+          "uploading": "מעלה קובץ...",
+          "dragAndDrop": "גרור ושחרר קבצים כאן",
+          "or": "או",
+          "browseButtonAria": "בחר קבצים להעלאה",
+          "browseButton": "העלה קבצים",
+          "maxFileSize": "גודל מקסימלי לקובץ: 10MB",
+          "uploadError": "שגיאה בעת העלאת הקובץ"
+        },
+        "filesList": {
+          "emptyTitle": "טרם הועלו קבצים",
+          "emptyHint": "גרור קבצים לאזור העלאה או לחץ על 'העלה קבצים'",
+          "filesUploadedTitle": "קבצים שהועלו:",
+          "fileSuccessAria": "הקובץ הועלה בהצלחה",
+          "removeFileAria": "הסר קובץ {{fileName}}",
+          "removeFileTitle": "הסר קובץ"
+        }
+      }
+    }
+  },
+  "profile": {
+    "title": "כל הנוסעים",
+    "privacyNotice": "באמצאות הנוסעים שחוברו אליך או אישית לפי בחירה לשם קבלת הצעות מחיר, השגת הפוליסה בדרכים שונים, הענקת שירותים וקבלת מידע מסחרי",
+    "backToHome": "חזרה לדף הבית",
+    "error": {
+      "loadingTitle": "שגיאה בטעינת הנתונים",
+      "networkError": "שגיאת רשת. אנא נסה שנית",
+      "genericDescription": "אנא נסה שנית"
+    },
+    "empty": {
+      "title": "לא נמצאו נוסעים במערכת",
+      "description": "נא ליצור קשר עם שירות הלקוחות",
+      "contactButton": "צור קשר"
+    },
+    "traveler": {
+      "headerTitle": "נוסע/ת {{number}} - {{firstName}} {{lastName}}",
+      "notSpecified": "לא צוין",
+      "sections": {
+        "personalHebrew": "פרטים אישיים (עברית)",
+        "contact": "פרטי קשר",
+        "address": "כתובת מגורים"
+      },
+      "fields": {
+        "idNumber": "מספר זהות",
+        "firstNameHebrew": "שם פרטי (עברית)",
+        "lastNameHebrew": "שם משפחה (עברית)",
+        "email": "כתובת דואר אלקטרוני",
+        "phone": "טלפון נייד",
+        "landline": "טלפון קווי",
+        "city": "עיר",
+        "street": "רחוב",
+        "houseNumber": "מספר בית",
+        "entrance": "כניסה",
+        "zipCode": "מיקוד",
+        "floor": "קומה",
+        "apartment": "דירה"
+      },
+      "placeholders": {
+        "city": "הקלד לחיפוש עיר...",
+        "street": "רחוב הרצל"
+      },
+      "noResults": {
+        "cities": "לא נמצאו ערים"
+      },
+      "actions": {
+        "edit": "עריכה",
+        "editAria": "עריכת פרטי נוסע",
+        "save": "שמור שינויים",
+        "saveAria": "שמור שינויים לפרטים אישיים",
+        "saving": "שומר...",
+        "cancelAria": "בטל עריכה וחזור למצב צפייה"
+      },
+      "success": {
+        "updateSuccess": "הפרטים עודכנו בהצלחה"
+      },
+      "errors": {
+        "citiesLoadError": "שגיאה בטעינת רשימת ערים",
+        "sessionExpired": "ההתחברות פגה. אנא התחבר שנית",
+        "validationError": "שגיאה בעדכון הפרטים. אנא נסה שנית",
+        "updateError": "שגיאה בעדכון הפרטים. אנא נסה שנית",
+        "serverError": "שגיאה בשרת. אנא נסה שנית",
+        "networkError": "שגיאת רשת. אנא נסה שנית"
+      },
+      "cancelDialog": {
+        "title": "בטל שינויים?",
+        "message": "יש לך שינויים שלא נשמרו. האם אתה בטוח שברצונך לבטל?",
+        "confirm": "כן, בטל",
+        "backToEdit": "חזור לעריכה"
+      }
+    }
+  },
+  "accessibility": {
+    "pageTitle": "הצהרת נגישות - PassportCard אזור אישי",
+    "title": "הצהרת נגישות / Accessibility Statement",
+    "intro": {
+      "heading": "אודות הנגישות בפורטל",
+      "paragraph1": "פורטל השירות העצמי מאפשר ללקוחות לנהל את פוליסות הביטוח שלהם מבית פספורטכארד (להלן – החברה), בצורה מקוונת ומהירה.",
+      "paragraph2": "מטרת החברה בהנגשת הפורטל, היא יצירת שוויון הזדמנויות במרחב האינטרנטי לאנשים עם לקויות מגוונות ולאנשים הנעזרים בטכנולוגיות מסייעות שונות בעת גלישה ברשת האינטרנט."
+    },
+    "standards": {
+      "heading": "התאמות הנגישות בפורטל המקוון",
+      "paragraph1": "בפורטל זה בוצעו התאמות נגישות בהתאם להמלצות התקן הישראלי (ת\"י 5568) ולנגישות תכנים באינטרנט ברמת AA בשילוב המלצות מסמך WCAG2.0 שפורסם על ידי הארגון הבינלאומי W3C העוסק בתקינה ברשת האינטרנט.",
+      "paragraph2": "ההתאמות שבוצעו בפורטל נבדקו באמצעות הדפדפנים הנפוצים ביותר: גוגל כרום ואינטרנט אקספלורר (EDGE). לשם קבלת חווית גלישה נעימה ומיטבית עם תוכנה להקראת מסך, אנו ממליצים להשתמש בתוכנת NVDA בגרסה העדכנית ביותר."
+    },
+    "features": {
+      "heading": "התאמות שבוצעו בפורטל",
+      "generalSubheading": "לצורך הנגשת הפורטל לאנשים עם מוגבלות בוצעו מספר רב של פעולות, ביניהן:",
+      "generalList": {
+        "item1": "יצירת סדר ניווט תקין וברור בעת ניווט ותפעול הפורטל באמצעות המקלדת.",
+        "item2": "שימוש במסגרת ברורה ובולטת בעת קבלת פוקוס כאשר המשתמש מנווט בפורטל באמצעות המקלדת.",
+        "item3": "שימוש בניגודיות חזותית מתאימה בין צבע הטקסט לצבע הרקע.",
+        "item4": "תיוג הכותרות בצורה היררכית נכונה בהתאם למידע המפורסם בהן ולמבנה העמוד.",
+        "item5": "יצירת שינוי חזותי בולט וברור בעת ריחוף באמצעות העכבר מעל אלמנטים קליקבילים (לחיצים) כגון: כפתורים וקישורים.",
+        "item6": "שימוש ברכיבים נגישים המאפשרים תפעול תקין באמצעות המקלדת בעת מעבר בין המסכים השונים."
+      },
+      "screenReaderSubheading": "התאמות שבוצעו בפורטל המקוון לגולשים המשתמשים בתוכנה להקראת מסך:",
+      "screenReaderList": {
+        "item1": "הוספת טקסט אלטרנטיבי מתאים לתמונות המופיעות בפורטל.",
+        "item2": "שימוש בכותרות עמוד מתאימות וברורות בהתאם למידע המופיע בעמוד.",
+        "item3": "שימוש בלייבלים מתאימים וברורים בשדות הקיימים בפורטל.",
+        "item4": "שימוש בפקודת aria-label להתאמת המידע המופיע בפורטל לתוכנה להקראת מסך.",
+        "item5": "שימוש בשפה פשוטה ובהירה בכל עמודי הפורטל."
+      },
+      "credits": "הייעוץ והליווי המקיף בנושא נגישות פורטל השירות העצמי לניהול פוליסות ביטוח מבית פספורטכארד בוצע על ידי",
+      "webATeam": "צוות WEB-A הנגשת אתרים, אפליקציות ומערכות מתקדמות"
+    },
+    "alternative": {
+      "heading": "אפשרויות שירות נוספות",
+      "paragraph1": "יצוין כי ניתן לנהל את פוליסות הביטוח של פספורטכארד גם באמצעות סוכני ביטוח, וכן באמצעות המוקד הטלפוני של החברה. במשרדי החברה לא מתקיימת קבלת קהל לצורך ניהול פוליסות ביטוח.",
+      "paragraph2": "למען הסר ספק, המידע המופיע בהצהרת נגישות זו מתייחס אך ורק לשימוש ותפעול הפורטל המקוון לניהול פוליסות ביטוח של החברה.",
+      "paragraph3": "במידה והנכם מעוניינים לקבל מידע נוסף אודות שירותי החברה או מידע אודות התאמות הנגישות בשירותי החברה, יש לעבור להצהרת הנגישות המופיעה באתר הראשי של החברה בכתובת:"
+    },
+    "commitment": {
+      "heading": "המחויבות שלנו לנגישות",
+      "paragraph1": "צוות חברת פספורטכארד מאמין כי לכל אדם עם מוגבלות צריכה להיות היכולת להשתמש בפורטל האינטרנט בצורה שווה, מהנה וחווייתית.",
+      "paragraph2": "בפורטל זה בוצעו שינויים והתאמות מיוחדות באמצעות הטכנולוגיה העדכנית והמתאימה ביותר לצרכי לקוחותינו והגולשים בפורטל. עם זאת חשוב לציין כי ייתכן וימצאו אלמנטים מסוימים שאינם מונגשים בצורה מלאה או נמצאים בתהליכי הנגשה לאנשים עם מוגבלות.",
+      "paragraph3": "נתקלתם ברכיב שאינו נגיש בפורטל? פנו אלינו ואנו מבטיחים לבדוק לשפר אותו בהקדם האפשרי וכמובן להעניק לכם את השירות הטוב ביותר בצורה מהירה, אישית ובהתאם לשביעות רצונכם."
+    },
+    "contact": {
+      "heading": "פרטי רכזת נגישות",
+      "coordinator": "החברה מינתה את עו\"ד טל לנדאו לרכזת הנגישות של החברה.",
+      "howToReach": "לבירורים נוספים, שאלות או בקשות מיוחדות בנושא נגישות הפורטל ניתן ליצור עימנו קשר באמצעים הבאים:",
+      "nameLabel": "שם מלא:",
+      "coordinatorName": "עו\"ד טל לנדאו",
+      "phoneLabel": "טלפון במשרד:",
+      "emailLabel": "דואר אלקטרוני:"
+    },
+    "credits": {
+      "heading": "עדכון אחרון וקרדיטים",
+      "lastUpdated": "הצהרת הנגישות עודכנה בתאריך 27/06/2024",
+      "copyright": "כל הזכויות בהצהרת נגישות זו שמורות לחברת WEB-A נגישות דיגיטלית בע\"מ ואין להפיץ, להעתיק או לשכפל אותה."
+    }
+  },
+  "layouts": {
+    "authHeader": {
+      "nav": {
+        "home": "דף הבית",
+        "policies": "הפוליסות שלי",
+        "claims": "תביעות",
+        "cards": "הכרטיסים שלי",
+        "appointAgent": "מינוי סוכן (בקרוב)"
+      },
+      "logoAria": "PassportCard לוגו - חזרה לדף הבית",
+      "stepperAria": "שלבי אשף",
+      "mainNavAria": "ניווט ראשי",
+      "mobileMenuAria": "תפריט ניווט",
+      "menu": "תפריט",
+      "closeMenuAria": "סגור תפריט",
+      "closeWizardAria": "סגור אשף",
+      "defaultUser": "משתמש",
+      "logoutAria": "התנתק מהמערכת",
+      "logout": "התנתק"
+    },
+    "publicFooter": {
+      "accessibilityLink": "הצהרת נגישות",
+      "privacyPolicyLink": "מדיניות הפרטיות של פספורטכארד",
+      "recaptchaPrefix": "האתר מאובטח באמצעות reCAPTCHA בכפוף ל",
+      "googlePrivacyLink": "מדיניות הפרטיות של גוגל",
+      "and": "ו",
+      "googleTermsLink": "תנאי השימוש של גוגל",
+      "companyInfo": "באמצעות פספורטכארד ישראל סוכנות לביטוח כללי (2014) בע\"מ רישיון מס' 514831742. החברה המבטחת - דיויד שילד חברה לביטוח בע\"מ"
+    }
+  },
+  "components": {
+    "claims": {
+      "fileUploadQueue": {
+        "title": "קבצים להעלאה ({{count}})",
+        "documentTypes": {
+          "selectType": "בחר סוג מסמך",
+          "invoice": "חשבונית",
+          "receipt": "קבלה",
+          "medicalReport": "דוח רפואי",
+          "idCard": "תעודת זהות",
+          "other": "אחר"
+        },
+        "selectTypeAria": "בחר סוג מסמך עבור {{fileName}}",
+        "removeFileAria": "הסר קובץ {{fileName}}"
+      },
+      "fileUploadZone": {
+        "ariaLabel": "גרור קבצים לכאן או לחץ לבחירה",
+        "primaryText": "העלאת מסמכים",
+        "secondaryText": "גרור ושחרר או לחץ לבחירה",
+        "supportedFormats": "קבצים נתמכים: PDF, JPG, PNG, DOCX (max 12MB)"
+      },
+      "missingDocuments": {
+        "title": "מסמכים נדרשים לתביעה",
+        "infoText": "סמן את המסמכים שצירפת או שאין ברשותך כרגע",
+        "selectStatusAria": "בחר מצב עבור {{docName}}",
+        "mandatoryNote": "מסמכים המסומנים בכוכבית הם חובה",
+        "statusOptions": {
+          "selectStatus": "בחר מצב",
+          "added": "כן צירפתי",
+          "notYet": "אין ברשותי כרגע",
+          "dontHave": "אין ברשותי",
+          "haveIt": "יש ברשותי",
+          "dontHaveNow": "אין ברשותי כרגע"
+        }
+      },
+      "uploadModal": {
+        "title": "העלאת מסמכים נוספים",
+        "closeAria": "סגור העלאת מסמכים",
+        "forClaimNumber": "עבור תביעה מספר:",
+        "noteLabel": "הוספת הערה (אופציונלי)",
+        "notePlaceholder": "הוסף הערה למסמכים שהועלו...",
+        "uploadButton": "שלח",
+        "uploadingShort": "שולח...",
+        "uploading": "שולח מסמכים...",
+        "uploadButtonAria": "שלח מסמכים לתביעה {{claimNumber}}",
+        "success": "המסמכים הועלו בהצלחה",
+        "loadingDocTypes": "טוען מסמכים נדרשים...",
+        "errors": {
+          "fileValidation": "שגיאה באימות קובץ",
+          "noFiles": "נא להוסיף לפחות קובץ אחד",
+          "noFilesOrStatus": "נא להעלות קבצים או לעדכן סטטוס מסמכים",
+          "documentTypeRequired": "נא לבחור סוג מסמך לכל הקבצים",
+          "validation": "שגיאה באימות",
+          "upload": "שגיאה בהעלאת מסמכים. אנא נסה שנית",
+          "loadDocTypes": "שגיאה בטעינת מסמכים נדרשים",
+          "filesStillUploading": "יש קבצים שעדיין בתהליך העלאה. נא להמתין"
+        }
+      }
+    }
+  },
+  "ds": {}
+}

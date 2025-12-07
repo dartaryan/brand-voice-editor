@@ -7,8 +7,135 @@
 // Constants
 // ============================================
 const STORAGE_KEY = 'passportcard_translation_review';
+const STORAGE_KEY_DOCUMENT = 'passportcard_document_data';
 const STORAGE_VERSION = '1.0.0';
 const CONFETTI_COLORS = ['#E10514', '#FF4757', '#C50412', '#FFFFFF', '#FFD700'];
+
+// ============================================
+// Feature 1: Reserved Words Translation Dictionary
+// ============================================
+const TRANSLATIONS = {
+  // Structure
+  "BUTTONS": "כפתורים",
+  "LABELS": "תוויות",
+  "MESSAGES": "הודעות",
+  "ERRORS": "שגיאות",
+  "COMMON": "כללי",
+  "AUTH": "אימות",
+  "DASHBOARD": "דשבורד",
+  "POLICIES": "פוליסות",
+  "CARDS": "כרטיסים",
+  "CLAIMS": "תביעות",
+  "PROFILE": "פרופיל",
+  "SETTINGS": "הגדרות",
+  "TITLE": "כותרת",
+  "DESCRIPTION": "תיאור",
+  "PLACEHOLDER": "טקסט מקום",
+  "SUBMIT": "שלח",
+  "CANCEL": "ביטול",
+  "SAVE": "שמור",
+  "DELETE": "מחק",
+  "EDIT": "עריכה",
+  "LOADING": "טוען",
+  "SUCCESS": "הצלחה",
+  "ERROR": "שגיאה",
+  "WARNING": "אזהרה",
+  "INFO": "מידע",
+  "HEADER": "כותרת עליונה",
+  "FOOTER": "כותרת תחתונה",
+  "NAVIGATION": "ניווט",
+  "MENU": "תפריט",
+  "SIDEBAR": "סרגל צד",
+  "MODAL": "חלון מודאלי",
+  "FORM": "טופס",
+  "INPUT": "קלט",
+  "SELECT": "בחירה",
+  "CHECKBOX": "תיבת סימון",
+  "RADIO": "כפתור בחירה",
+  "TOOLTIP": "טיפ כלי",
+  // Additional keys from the JSON structure
+  "API": "ממשק",
+  "STATUS": "סטטוס",
+  "EMPTY": "ריק",
+  "FIELDS": "שדות",
+  "COUNTRY": "מדינה",
+  "VALIDATION": "אימות",
+  "ACCESSIBILITY": "נגישות",
+  "DATETIME": "תאריך ושעה",
+  "DAYS": "ימים",
+  "MONTHS": "חודשים",
+  "GREETINGS": "ברכות",
+  "LOGIN": "התחברות",
+  "OTP": "קוד אימות",
+  "SECTIONS": "חלקים",
+  "STATISTICS": "סטטיסטיקות",
+  "NOTIFICATIONS": "התראות",
+  "QUICKACTIONS": "פעולות מהירות",
+  "RECENTACTIVITY": "פעילות אחרונה",
+  "CARD": "כרטיס",
+  "FILTER": "סינון",
+  "SORT": "מיון",
+  "FILTERS": "מסננים",
+  "UPDATE": "עדכון",
+  "STEP1": "שלב 1",
+  "STEP2": "שלב 2",
+  "STEP3": "שלב 3",
+  "STEP4": "שלב 4",
+  "STEP5": "שלב 5",
+  "STEP6": "שלב 6",
+  "STEPS": "שלבים",
+  "SUMMARY": "סיכום",
+  "GALLERY": "גלריה",
+  "DETAILS": "פרטים",
+  "REPORT": "דיווח",
+  "LOAD": "טעינה",
+  "DEFAULTS": "ברירות מחדל",
+  "POSTPAID": "תביעה",
+  "UPLOAD": "העלאה",
+  "TRAVELER": "נוסע",
+  "INTRO": "הקדמה",
+  "STANDARDS": "תקנים",
+  "FEATURES": "תכונות",
+  "ALTERNATIVE": "חלופות",
+  "COMMITMENT": "מחויבות",
+  "CONTACT": "יצירת קשר",
+  "CREDITS": "קרדיטים",
+  "LAYOUTS": "פריסות",
+  "AUTHHEADER": "כותרת מאומתת",
+  "NAV": "ניווט",
+  "PUBLICFOOTER": "כותרת תחתונה ציבורית",
+  "COMPONENTS": "רכיבים",
+  "FILEUPLOADQUEUE": "תור העלאת קבצים",
+  "FILEUPLOADZONE": "אזור העלאת קבצים",
+  "MISSINGDOCUMENTS": "מסמכים חסרים",
+  "UPLOADMODAL": "חלון העלאה",
+  "CREDITGUARD": "קרדיט גארד",
+  "DERIVEDNOTIFICATIONS": "התראות נגזרות",
+  "POLICYCARD": "כרטיס פוליסה",
+  "STATUSFEMININE": "סטטוס (נקבה)",
+  "EXITDIALOG": "דיאלוג יציאה",
+  "REASONS": "סיבות",
+  "OPTIONS": "אפשרויות",
+  "DESTINATIONS": "יעדים",
+  "DATES": "תאריכים",
+  "EXTENSIONS": "הרחבות",
+  "COST": "עלות",
+  "CHARGETYPES": "סוגי חיוב",
+  "LOADEDSTATUS": "סטטוס טעינה",
+  "CARDSTATUS": "סטטוס כרטיס",
+  "CREDITCARD": "כרטיס אשראי",
+  "STATUSAPI": "סטטוס API",
+  "SKELETON": "שלד טעינה",
+  "NOTESMODAL": "חלון הערות",
+  "DOCUMENTS": "מסמכים",
+  "PAYMENT": "תשלום",
+  "ZONE": "אזור",
+  "FILESLIST": "רשימת קבצים",
+  "RELATIVETIME": "זמן יחסי",
+  "DAYSSHORT": "ימים קצר",
+  "ANNOUNCMENTS": "הכרזות",
+  "ANNOUNCEMENTS": "הכרזות"
+};
 
 // ============================================
 // State
@@ -24,8 +151,13 @@ let state = {
   loadedFileName: 'he.json',
   fileSignature: null,
   consecutiveApprovals: 0,
-  lastMilestone: 0
+  lastMilestone: 0,
+  // Undo history stack
+  undoHistory: []
 };
+
+// Maximum undo history size
+const MAX_UNDO_HISTORY = 50;
 
 // ============================================
 // DOM Elements
@@ -39,8 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
   cacheElements();
   setupEventListeners();
   loadSavedTheme();
-  checkSavedProgress();
   setupScrollBehavior();
+  
+  // Feature 2: Try auto-restore document from localStorage
+  if (!tryAutoRestoreDocument()) {
+    // If no auto-restore, check for saved progress banner
+    checkSavedProgress();
+  }
 });
 
 function cacheElements() {
@@ -50,6 +187,7 @@ function cacheElements() {
   el.headerStep = document.getElementById('header-step');
   el.logoLarge = document.getElementById('logo-large');
   el.btnTheme = document.getElementById('btn-theme');
+  el.btnUndo = document.getElementById('btn-undo');
   el.btnReset = document.getElementById('btn-reset');
   el.btnHeaderDownload = document.getElementById('btn-header-download');
   el.btnUpload = document.getElementById('btn-upload');
@@ -133,6 +271,7 @@ function setupEventListeners() {
 
   // Header buttons
   el.btnTheme.addEventListener('click', toggleTheme);
+  el.btnUndo.addEventListener('click', performUndo);
   el.btnReset.addEventListener('click', () => showModal('modal-reset'));
   el.btnUpload.addEventListener('click', showWelcomeScreen);
   el.btnMobileMenu.addEventListener('click', toggleMobileMenu);
@@ -291,6 +430,7 @@ function loadSavedProgress() {
 
 function clearSavedProgress() {
   localStorage.removeItem(STORAGE_KEY);
+  clearDocumentData(); // Feature 2: Also clear document data
 }
 
 function checkSavedProgress() {
@@ -323,6 +463,203 @@ function savePreference(key, value) {
 function getPreference(key, defaultValue = null) {
   const prefs = JSON.parse(localStorage.getItem('passportcard_prefs') || '{}');
   return prefs.hasOwnProperty(key) ? prefs[key] : defaultValue;
+}
+
+// ============================================
+// Feature 1: Translation Functions
+// ============================================
+function translateWord(word) {
+  // Case-insensitive lookup
+  const upperWord = word.toUpperCase();
+  if (TRANSLATIONS[upperWord]) {
+    return {
+      translated: TRANSLATIONS[upperWord],
+      original: word,
+      wasTranslated: true
+    };
+  }
+  return {
+    translated: word,
+    original: word,
+    wasTranslated: false
+  };
+}
+
+function translatePath(path) {
+  const parts = path.split('.');
+  return parts.map(part => translateWord(part));
+}
+
+// Render a translated word with tooltip
+function renderTranslatedWord(word, additionalClass = '') {
+  const result = translateWord(word);
+  if (result.wasTranslated) {
+    return `<span class="translated-word ${additionalClass}" data-original="${escapeAttr(result.original)}" title="${escapeAttr(result.original)}">${escapeHtml(result.translated)}</span>`;
+  }
+  return `<span class="${additionalClass}">${escapeHtml(word)}</span>`;
+}
+
+// Render a translated path as breadcrumb
+function renderTranslatedBreadcrumb(key) {
+  const parts = key.split('.');
+  return parts.map((part, i) => {
+    const isLast = i === parts.length - 1;
+    const result = translateWord(part);
+    const className = isLast ? 'breadcrumb-current' : 'breadcrumb-parent';
+    
+    if (result.wasTranslated) {
+      return `<span class="${className} translated-word" data-original="${escapeAttr(result.original)}" title="${escapeAttr(result.original)}">${escapeHtml(result.translated)}</span>`;
+    }
+    return `<span class="${className}">${escapeHtml(part)}</span>`;
+  }).join('<span class="breadcrumb-sep"> › </span>');
+}
+
+// ============================================
+// Feature 2: Document Persistence
+// ============================================
+function saveDocumentData(data, fileName) {
+  try {
+    const documentStorage = {
+      version: STORAGE_VERSION,
+      lastUpdated: new Date().toISOString(),
+      fileName: fileName,
+      fileSignature: state.fileSignature,
+      documentData: data
+    };
+    
+    const dataStr = JSON.stringify(documentStorage);
+    
+    // Check size limit (approximately 5MB for localStorage)
+    if (dataStr.length > 4.5 * 1024 * 1024) {
+      console.warn('Document too large for localStorage persistence');
+      showToast('המסמך גדול מדי לשמירה אוטומטית', 'warning');
+      return false;
+    }
+    
+    localStorage.setItem(STORAGE_KEY_DOCUMENT, dataStr);
+    return true;
+  } catch (e) {
+    console.error('Error saving document:', e);
+    return false;
+  }
+}
+
+function loadDocumentData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_DOCUMENT);
+    return saved ? JSON.parse(saved) : null;
+  } catch {
+    return null;
+  }
+}
+
+function clearDocumentData() {
+  localStorage.removeItem(STORAGE_KEY_DOCUMENT);
+}
+
+function tryAutoRestoreDocument() {
+  const savedDocument = loadDocumentData();
+  const savedProgress = loadSavedProgress();
+  
+  // Only auto-restore if we have both document and matching progress
+  if (savedDocument && savedDocument.documentData && savedProgress && savedProgress.fileSignature) {
+    // Check if signatures match
+    if (savedDocument.fileSignature && 
+        savedProgress.fileSignature &&
+        savedDocument.fileSignature.structureHash === savedProgress.fileSignature.structureHash) {
+      
+      // Auto restore
+      state.loadedFileName = savedDocument.fileName || 'he.json';
+      state.fileSignature = savedDocument.fileSignature;
+      
+      initializeWizard(savedDocument.documentData, true);
+      showToast('המשך עבודה על מסמך קודם', 'info');
+      return true;
+    }
+  }
+  return false;
+}
+
+// ============================================
+// Undo History System
+// ============================================
+function pushToUndoHistory(action) {
+  // Action types: 'approve', 'unapprove', 'edit', 'approveAll', 'approveGroup'
+  state.undoHistory.push(action);
+  
+  // Limit history size
+  if (state.undoHistory.length > MAX_UNDO_HISTORY) {
+    state.undoHistory.shift();
+  }
+  
+  updateUndoButtonState();
+}
+
+function performUndo() {
+  if (state.undoHistory.length === 0) {
+    showToast('אין פעולות לביטול', 'info');
+    return;
+  }
+  
+  const action = state.undoHistory.pop();
+  
+  switch (action.type) {
+    case 'approve':
+      // Undo single approval
+      state.approved.delete(action.key);
+      break;
+      
+    case 'unapprove':
+      // Undo unapproval (re-approve)
+      state.approved.add(action.key);
+      break;
+      
+    case 'edit':
+      // Undo edit - restore previous value
+      if (action.previousValue === null) {
+        delete state.edited[action.key];
+      } else {
+        state.edited[action.key] = action.previousValue;
+      }
+      break;
+      
+    case 'approveAll':
+      // Undo approve all - remove all keys that were approved
+      action.keys.forEach(key => {
+        state.approved.delete(key);
+      });
+      break;
+      
+    case 'approveGroup':
+      // Undo approve group - remove all keys that were approved
+      action.keys.forEach(key => {
+        state.approved.delete(key);
+      });
+      break;
+  }
+  
+  // Refresh UI
+  renderCurrentSection();
+  renderMinimap();
+  updateProgress();
+  saveProgress();
+  updateUndoButtonState();
+  
+  showToast('הפעולה בוטלה', 'success');
+}
+
+function updateUndoButtonState() {
+  if (el.btnUndo) {
+    el.btnUndo.disabled = state.undoHistory.length === 0;
+    el.btnUndo.title = state.undoHistory.length > 0 
+      ? `בטל פעולה אחרונה (${state.undoHistory.length} פעולות בהיסטוריה)`
+      : 'אין פעולות לביטול';
+  }
+}
+
+function clearUndoHistory() {
+  state.undoHistory = [];
+  updateUndoButtonState();
 }
 
 // ============================================
@@ -428,6 +765,9 @@ function initializeWizard(data, resume = false) {
     state.currentFieldIndex = 0;
   }
 
+  // Feature 2: Save document to localStorage for persistence
+  saveDocumentData(data, state.loadedFileName);
+
   // Show tutorial if first time
   const showTutorial = getPreference('showTutorial', true);
   if (showTutorial && !resume) {
@@ -526,32 +866,113 @@ function getGroupPath(sectionName, parentPath, groupName) {
 }
 
 // Check if group is expanded (from state)
+// DEFAULT: All groups are COLLAPSED by default
 function isGroupExpanded(groupPath) {
   if (!state.expandedGroups) {
     state.expandedGroups = new Set();
-    return true; // Default expanded
   }
-  // If not in collapsedGroups, it's expanded (default state)
-  if (!state.collapsedGroups) {
-    return true;
-  }
-  return !state.collapsedGroups.has(groupPath);
+  // Only expanded if explicitly in expandedGroups set
+  return state.expandedGroups.has(groupPath);
 }
 
-// Toggle group expand/collapse
-window.toggleGroup = function(groupPath) {
-  if (!state.collapsedGroups) {
-    state.collapsedGroups = new Set();
+// Toggle group expand/collapse with ACCORDION behavior
+// Feature 3: Direct DOM manipulation instead of re-rendering to prevent flickering
+window.toggleGroup = function(groupPath, event) {
+  // Stop event propagation if event is provided
+  if (event) {
+    event.stopPropagation();
   }
   
-  if (state.collapsedGroups.has(groupPath)) {
-    state.collapsedGroups.delete(groupPath);
+  if (!state.expandedGroups) {
+    state.expandedGroups = new Set();
+  }
+  
+  const groupElement = document.querySelector(`[data-group="${groupPath}"]`);
+  if (!groupElement) return;
+  
+  const wasExpanded = state.expandedGroups.has(groupPath);
+  
+  // ACCORDION BEHAVIOR: Close all sibling groups at same level
+  const groupParts = groupPath.split('.');
+  const parentPath = groupParts.slice(0, -1).join('.');
+  
+  // Close all groups that share the same parent (siblings) - using DOM manipulation
+  const groupsToClose = [];
+  state.expandedGroups.forEach(expandedPath => {
+    const expandedParts = expandedPath.split('.');
+    const expandedParent = expandedParts.slice(0, -1).join('.');
+    
+    // If same parent and same depth level, close it
+    if (expandedParent === parentPath && expandedParts.length === groupParts.length) {
+      groupsToClose.push(expandedPath);
+    }
+  });
+  
+  // Feature 3: Close sibling groups via direct DOM manipulation
+  groupsToClose.forEach(path => {
+    state.expandedGroups.delete(path);
+    const siblingElement = document.querySelector(`[data-group="${path}"]`);
+    if (siblingElement) {
+      siblingElement.classList.remove('expanded');
+      siblingElement.classList.add('collapsed');
+    }
+  });
+  
+  // Toggle the clicked group (open if it was closed)
+  if (!wasExpanded) {
+    state.expandedGroups.add(groupPath);
+    // Feature 3: Direct DOM manipulation - expand
+    groupElement.classList.remove('collapsed');
+    groupElement.classList.add('expanded');
   } else {
-    state.collapsedGroups.add(groupPath);
+    // Feature 3: Direct DOM manipulation - collapse
+    groupElement.classList.remove('expanded');
+    groupElement.classList.add('collapsed');
   }
   
-  // Re-render current section
-  renderCurrentSection();
+  // Feature 3: No full re-render - just update state and save
+  // renderCurrentSection(); // REMOVED - this was causing the flicker
+};
+
+// Approve all fields in a specific group/section
+window.approveGroupFields = function(groupPath, event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  
+  const section = state.sections[state.currentSectionIndex];
+  if (!section) return;
+  
+  // Collect keys that will be approved for undo
+  const keysToApprove = [];
+  section.fields.forEach(field => {
+    // Check if the field key starts with the group path (after section name)
+    const fieldPathWithoutSection = field.key.replace(`${section.name}.`, '');
+    const groupPathWithoutSection = groupPath.replace(`${section.name}.`, '');
+    
+    if (fieldPathWithoutSection.startsWith(groupPathWithoutSection + '.') || 
+        fieldPathWithoutSection === groupPathWithoutSection) {
+      if (!state.approved.has(field.key)) {
+        keysToApprove.push(field.key);
+      }
+    }
+  });
+  
+  if (keysToApprove.length > 0) {
+    // Push to undo history before making changes
+    pushToUndoHistory({ type: 'approveGroup', keys: keysToApprove, groupPath: groupPath });
+    
+    keysToApprove.forEach(key => {
+      state.approved.add(key);
+    });
+    
+    showToast(`${keysToApprove.length} שדות אושרו בתחום`, 'success');
+    renderCurrentSection();
+    saveProgress();
+    updateProgress();
+    renderMinimap();
+    checkSectionCompletion();
+  }
 };
 
 // ============================================
@@ -563,6 +984,7 @@ function showWelcomeScreen() {
   el.summaryScreen.classList.remove('visible');
   el.progressBarContainer.classList.remove('visible');
   el.headerStep.classList.remove('visible');
+  el.btnUndo.style.display = 'none';
   el.btnReset.style.display = 'none';
   el.btnHeaderDownload.style.display = 'none';
   el.btnUpload.style.display = 'none';
@@ -579,12 +1001,14 @@ function showWizardScreen() {
   el.summaryScreen.classList.remove('visible');
   el.progressBarContainer.classList.add('visible');
   el.headerStep.classList.add('visible');
+  el.btnUndo.style.display = 'flex';
   el.btnReset.style.display = 'flex';
   el.btnHeaderDownload.style.display = 'flex';
   el.btnUpload.style.display = 'none';
   el.keyboardHint.classList.add('visible');
   el.footer.style.display = 'none';
   document.body.classList.add('wizard-active');
+  updateUndoButtonState();
 }
 
 function showSummaryScreen() {
@@ -633,6 +1057,7 @@ function showSummaryScreen() {
 
 function resetAndShowWelcome() {
   clearSavedProgress();
+  clearUndoHistory();
   state.originalData = null;
   state.currentData = null;
   state.sections = [];
@@ -679,11 +1104,14 @@ function renderMinimap() {
       statusIcon = 'ti-point-filled';
     }
 
+    // Feature 1: Translate section name
+    const translatedName = renderTranslatedWord(section.name, 'minimap-section-name');
+
     return `
       <li class="minimap-item ${isCurrent ? 'current' : ''} ${isComplete ? 'completed' : ''}" 
           data-section="${index}" onclick="navigateToSection(${index})">
         <span class="minimap-item-icon ${statusClass}"><i class="ti ${statusIcon}"></i></span>
-        <span class="minimap-item-text">${section.name}</span>
+        <span class="minimap-item-text">${translatedName}</span>
         <span class="minimap-item-count">${approvedCount}/${totalCount}</span>
       </li>
     `;
@@ -723,7 +1151,7 @@ function formatKeyAsBreadcrumb(key) {
 }
 
 // ============================================
-// Single Dropdown Logic - Only one card expanded at a time
+// Single Dropdown Logic - Only one card expanded at a time (ACCORDION)
 // ============================================
 function closeAllFieldCards() {
   document.querySelectorAll('.field-card.expanded').forEach(card => {
@@ -731,23 +1159,23 @@ function closeAllFieldCards() {
   });
 }
 
-// Expand a specific field card
+// Expand a specific field card with accordion behavior
 window.expandFieldCard = function(key) {
   const card = document.querySelector(`.field-card[data-key="${key}"]`);
   if (!card) return;
   
   const wasExpanded = card.classList.contains('expanded');
   
-  // Close all cards first (single dropdown behavior)
+  // ACCORDION BEHAVIOR: Close all cards first (only one card open at a time)
   closeAllFieldCards();
   
   // Toggle - if it was expanded, leave it closed; otherwise expand it
   if (!wasExpanded) {
     card.classList.add('expanded');
-    // Scroll into view
-    setTimeout(() => {
+    // Scroll into view smoothly without causing layout shifts
+    requestAnimationFrame(() => {
       card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 100);
+    });
   }
 };
 
@@ -758,9 +1186,15 @@ function renderCurrentSection() {
   const section = state.sections[state.currentSectionIndex];
   if (!section) return;
 
-  el.sectionTitle.textContent = section.name;
+  // Feature 1: Translate section title
+  const translatedSectionTitle = translateWord(section.name);
+  if (translatedSectionTitle.wasTranslated) {
+    el.sectionTitle.innerHTML = `<span class="translated-word" data-original="${escapeAttr(translatedSectionTitle.original)}" title="${escapeAttr(translatedSectionTitle.original)}">${escapeHtml(translatedSectionTitle.translated)}</span>`;
+  } else {
+    el.sectionTitle.textContent = section.name;
+  }
   el.sectionSubtitle.textContent = `${section.fields.length} שדות`;
-  el.headerStep.textContent = `סקשן ${state.currentSectionIndex + 1} מתוך ${state.sections.length}`;
+  el.headerStep.textContent = `תחום ${state.currentSectionIndex + 1} מתוך ${state.sections.length}`;
 
   // Build tree structure from fields (skip the section name prefix)
   const tree = buildFieldTreeFromSection(section);
@@ -848,16 +1282,33 @@ function renderFieldTree(tree, sectionName, parentPath, depth) {
     const totalFields = countFieldsInGroup(group);
     const approvedFields = countApprovedInGroup(group);
     const isComplete = totalFields > 0 && approvedFields === totalFields;
+    const unapprovedCount = totalFields - approvedFields;
+    
+    // Feature 1: Translate group name
+    const translatedGroup = translateWord(groupName);
+    const displayName = translatedGroup.wasTranslated 
+      ? `<span class="translated-word" data-original="${escapeAttr(translatedGroup.original)}" title="${escapeAttr(translatedGroup.original)}">${escapeHtml(translatedGroup.translated)}</span>`
+      : escapeHtml(groupName);
+    
+    // Section approval button text (Hebrew)
+    const translatedNameForButton = translatedGroup.wasTranslated ? translatedGroup.translated : groupName;
+    const approveButtonText = `אשר תחום ${translatedNameForButton}`;
     
     html += `
       <div class="field-group ${isExpanded ? 'expanded' : 'collapsed'} ${isComplete ? 'complete' : ''}" data-group="${groupPath}" data-depth="${depth}">
-        <div class="field-group-header" onclick="toggleGroup('${escapeAttr(groupPath)}')" style="padding-right: ${depth * 16}px;">
-          <i class="ti ${isExpanded ? 'ti-chevron-down' : 'ti-chevron-left'} field-group-arrow"></i>
-          <span class="field-group-name">${groupName}</span>
+        <div class="field-group-header" onclick="toggleGroup('${escapeAttr(groupPath)}', event)" style="padding-right: ${depth * 16}px;">
+          <span class="field-group-name">${displayName}</span>
           <span class="field-group-count">${approvedFields}/${totalFields}</span>
           ${isComplete ? '<i class="ti ti-check field-group-check"></i>' : ''}
+          ${!isComplete && unapprovedCount > 0 ? `
+            <button class="field-group-approve-btn" onclick="approveGroupFields('${escapeAttr(groupPath)}', event)" title="${approveButtonText}">
+              <i class="ti ti-checks"></i>
+              <span>${approveButtonText}</span>
+            </button>
+          ` : ''}
+          <i class="ti ti-chevron-down field-group-arrow"></i>
         </div>
-        <div class="field-group-content" style="${isExpanded ? '' : 'display: none;'}">
+        <div class="field-group-content">
           ${renderFieldTree(group, sectionName, groupPath, depth + 1)}
         </div>
       </div>
@@ -877,8 +1328,8 @@ function renderFieldCard(field, index) {
   if (isApproved) cardClasses += ' approved';
   if (isEdited) cardClasses += ' edited';
 
-  // Use breadcrumb format for key display
-  const breadcrumbKey = formatKeyAsBreadcrumb(field.key);
+  // Feature 1: Use translated breadcrumb format for key display
+  const breadcrumbKey = renderTranslatedBreadcrumb(field.key);
   
   // Get just the last part of the key for the title (the field name)
   const keyParts = field.key.split('.');
@@ -896,7 +1347,6 @@ function renderFieldCard(field, index) {
         <span class="field-card-title-preview">${escapeHtml(truncatedTitle)}</span>
         <div class="field-card-key field-card-breadcrumb">${breadcrumbKey}</div>
         <div class="field-card-badges">
-          ${isApproved ? '<span class="badge badge-approved">אושר</span>' : ''}
           ${isEdited ? '<span class="badge badge-edited">נערך</span>' : ''}
         </div>
         <div class="field-card-quick-actions">
@@ -909,14 +1359,6 @@ function renderFieldCard(field, index) {
         </div>
         <i class="ti ti-chevron-down field-card-expand-icon"></i>
         <div class="field-card-actions">
-          <button class="entry-action-btn" onclick="event.stopPropagation(); copyToClipboard('${escapeAttr(currentValue)}')" title="העתקה">
-            <i class="ti ti-copy"></i>
-          </button>
-          ${isApproved ? `
-            <button class="entry-action-btn" onclick="event.stopPropagation(); unapproveField('${field.key}')" title="ביטול אישור">
-              <i class="ti ti-x"></i>
-            </button>
-          ` : ''}
         </div>
       </div>
       <div class="field-card-content">
@@ -931,10 +1373,16 @@ function renderFieldCard(field, index) {
           <i class="ti ti-edit"></i>
           עריכה
         </button>
+        ${isApproved ? `
+        <button class="btn btn-unapprove" onclick="event.stopPropagation(); unapproveField('${field.key}')">
+          הסרת אישור
+        </button>
+        ` : `
         <button class="btn btn-primary btn-approve" onclick="event.stopPropagation(); approveField('${field.key}')">
           <i class="ti ti-check"></i>
           אישור
         </button>
+        `}
         <button class="btn btn-secondary btn-cancel" onclick="event.stopPropagation(); cancelEdit('${field.key}')">
           ביטול
         </button>
@@ -989,6 +1437,10 @@ window.saveEdit = function(key) {
   const newValue = textarea.value;
   const originalValue = textarea.dataset.original;
 
+  // Push to undo history before making changes (store previous edited value or null)
+  const previousValue = state.edited.hasOwnProperty(key) ? state.edited[key] : null;
+  pushToUndoHistory({ type: 'edit', key: key, previousValue: previousValue });
+
   if (newValue !== originalValue) {
     state.edited[key] = newValue;
     card.classList.add('edited');
@@ -1019,6 +1471,9 @@ window.approveField = function(key) {
   const card = document.querySelector(`.field-card[data-key="${key}"]`);
   if (!card) return;
 
+  // Push to undo history before making changes
+  pushToUndoHistory({ type: 'approve', key: key });
+
   state.approved.add(key);
   card.classList.add('approved', 'animate-approve');
   card.classList.remove('editing', 'expanded');
@@ -1047,6 +1502,9 @@ window.quickApproveField = function(key) {
   
   // If already approved, do nothing
   if (state.approved.has(key)) return;
+
+  // Push to undo history before making changes
+  pushToUndoHistory({ type: 'approve', key: key });
 
   state.approved.add(key);
   card.classList.add('approved', 'animate-approve');
@@ -1105,6 +1563,9 @@ window.unapproveField = function(key) {
   const card = document.querySelector(`.field-card[data-key="${key}"]`);
   if (!card) return;
 
+  // Push to undo history before making changes
+  pushToUndoHistory({ type: 'unapprove', key: key });
+
   state.approved.delete(key);
   card.classList.remove('approved');
   // Expand the card when unapproving so user can see it
@@ -1125,39 +1586,124 @@ function updateFieldBadges(card, key) {
   const isEdited = state.edited.hasOwnProperty(key);
 
   badgesContainer.innerHTML = `
-    ${isApproved ? '<span class="badge badge-approved">אושר</span>' : ''}
     ${isEdited ? '<span class="badge badge-edited">נערך</span>' : ''}
   `;
 
   // Update action buttons
   const actionsContainer = card.querySelector('.field-card-actions');
-  const currentValue = isEdited ? state.edited[key] : getOriginalValue(key);
-  actionsContainer.innerHTML = `
-    <button class="entry-action-btn" onclick="copyToClipboard('${escapeAttr(currentValue)}')" title="העתקה">
-      <i class="ti ti-copy"></i>
-    </button>
-    ${isApproved ? `
-      <button class="entry-action-btn" onclick="unapproveField('${key}')" title="ביטול אישור">
-        <i class="ti ti-x"></i>
-      </button>
-    ` : ''}
-  `;
+  actionsContainer.innerHTML = ``;
+  
+  // Update footer approve/unapprove button
+  const footer = card.querySelector('.field-card-footer');
+  const existingApproveBtn = footer.querySelector('.btn-approve');
+  const existingUnapproveBtn = footer.querySelector('.btn-unapprove');
+  
+  if (isApproved && existingApproveBtn) {
+    const newBtn = document.createElement('button');
+    newBtn.className = 'btn btn-unapprove';
+    newBtn.onclick = (e) => { e.stopPropagation(); unapproveField(key); };
+    newBtn.textContent = 'הסרת אישור';
+    existingApproveBtn.replaceWith(newBtn);
+  } else if (!isApproved && existingUnapproveBtn) {
+    const newBtn = document.createElement('button');
+    newBtn.className = 'btn btn-primary btn-approve';
+    newBtn.onclick = (e) => { e.stopPropagation(); approveField(key); };
+    newBtn.innerHTML = '<i class="ti ti-check"></i> אישור';
+    existingUnapproveBtn.replaceWith(newBtn);
+  }
+  
+  // Update parent group counts
+  updateGroupCounts();
+}
+
+// Update all group counts in the accordion headers
+function updateGroupCounts() {
+  const section = state.sections[state.currentSectionIndex];
+  if (!section) return;
+  
+  // Get all field groups in the current view
+  document.querySelectorAll('.field-group').forEach(groupEl => {
+    const groupPath = groupEl.dataset.group;
+    if (!groupPath) return;
+    
+    // Count fields in this group
+    let totalFields = 0;
+    let approvedFields = 0;
+    
+    section.fields.forEach(field => {
+      const fieldPathWithoutSection = field.key.replace(`${section.name}.`, '');
+      const groupPathWithoutSection = groupPath.replace(`${section.name}.`, '');
+      
+      // Check if field belongs to this group (starts with group path)
+      if (fieldPathWithoutSection.startsWith(groupPathWithoutSection + '.') || 
+          fieldPathWithoutSection === groupPathWithoutSection ||
+          field.key.startsWith(groupPath + '.')) {
+        totalFields++;
+        if (state.approved.has(field.key)) {
+          approvedFields++;
+        }
+      }
+    });
+    
+    // Update the count display
+    const countEl = groupEl.querySelector(':scope > .field-group-header .field-group-count');
+    if (countEl) {
+      countEl.textContent = `${approvedFields}/${totalFields}`;
+    }
+    
+    // Update complete status
+    const isComplete = totalFields > 0 && approvedFields === totalFields;
+    if (isComplete) {
+      groupEl.classList.add('complete');
+      // Hide approve button if complete
+      const approveBtn = groupEl.querySelector(':scope > .field-group-header .field-group-approve-btn');
+      if (approveBtn) {
+        approveBtn.style.display = 'none';
+      }
+      // Show check icon
+      const header = groupEl.querySelector(':scope > .field-group-header');
+      if (header && !header.querySelector('.field-group-check')) {
+        const checkIcon = document.createElement('i');
+        checkIcon.className = 'ti ti-check field-group-check';
+        header.insertBefore(checkIcon, header.querySelector('.field-group-arrow'));
+      }
+    } else {
+      groupEl.classList.remove('complete');
+      // Show approve button if not complete
+      const approveBtn = groupEl.querySelector(':scope > .field-group-header .field-group-approve-btn');
+      if (approveBtn) {
+        approveBtn.style.display = 'flex';
+      }
+      // Remove check icon
+      const checkIcon = groupEl.querySelector(':scope > .field-group-header .field-group-check');
+      if (checkIcon) {
+        checkIcon.remove();
+      }
+    }
+  });
 }
 
 function approveAllInSection() {
   const section = state.sections[state.currentSectionIndex];
   if (!section) return;
 
-  let approved = 0;
+  // Collect keys that will be approved for undo
+  const keysToApprove = [];
   section.fields.forEach(field => {
     if (!state.approved.has(field.key)) {
-      state.approved.add(field.key);
-      approved++;
+      keysToApprove.push(field.key);
     }
   });
 
-  if (approved > 0) {
-    showToast(`${approved} שדות אושרו`, 'success');
+  if (keysToApprove.length > 0) {
+    // Push to undo history before making changes
+    pushToUndoHistory({ type: 'approveAll', keys: keysToApprove });
+    
+    keysToApprove.forEach(key => {
+      state.approved.add(key);
+    });
+
+    showToast(`${keysToApprove.length} שדות אושרו`, 'success');
     renderCurrentSection();
     saveProgress();
     updateProgress();
@@ -1173,7 +1719,7 @@ function checkSectionCompletion() {
   const allApproved = section.fields.every(f => state.approved.has(f.key));
   if (allApproved) {
     triggerConfetti(50);
-    showToast('הסקשן הושלם', 'success');
+    showToast('התחום הושלם', 'success');
 
     // Auto advance if not last section
     if (state.currentSectionIndex < state.sections.length - 1) {
@@ -1315,6 +1861,13 @@ function closeMobileMenu() {
 function handleKeyboardShortcuts(e) {
   // Only when wizard is visible
   if (!el.wizardContainer.classList.contains('visible')) return;
+
+  // CTRL+Z for undo - works even in text fields
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+    e.preventDefault();
+    performUndo();
+    return;
+  }
 
   // Ignore if typing in textarea
   if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') {
